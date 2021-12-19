@@ -1,0 +1,15 @@
+@import "colors.css";
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    color: var(--common-font-secondary);
+    background-color: var(--common-bg);
+}
+
+#app {
+    width: 100vw;
+    height: 100vh;
+}

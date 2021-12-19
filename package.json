@@ -1,0 +1,25 @@
+{
+  "name": "project-overview",
+  "version": "1.0.0",
+  "description": "Website saving links to VSCode to localStorage",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/H0rn0chse/project-overview.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/H0rn0chse/project-overview/issues"
+  },
+  "homepage": "https://github.com/H0rn0chse/project-overview#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@h0rn0chse/socket-server": "^1.1.1"
+  }
+}
