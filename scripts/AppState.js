@@ -1,15 +1,15 @@
 import { setDirtyState } from "./DirtyState.js";
 import { getItems } from "./ItemManger.js";
 
-const { createStore } = globalThis.Vuex;
+const { Vuex } = globalThis;
 
-export const appState = createStore({
+export const appState = new Vuex.Store({
     state: {
-        title: "Lorem Ipsum",
+        searchTerms: [],
         items: getItems(),
     },
     mutations: {
-        updateAll (state) {
+        /*updateAll (state) {
             state.entries = getItems();
         },
         updateRow (state, param) {
@@ -17,12 +17,18 @@ export const appState = createStore({
             if (index > -1) {
                 state.entries[index][param.property] = param.value;
             }
-        }
+        }*/
+        setSearchTerms (state, searchTerms) {
+            state.searchTerms = searchTerms;
+        },
     },
     actions: {
         /*updateAll (context) {
             context.commit('updateAll');
         },*/
+        setSearchTerms (context, searchTerms) {
+            context.commit("setSearchTerms", searchTerms);
+        },
     },
 });
 

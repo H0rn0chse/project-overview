@@ -1,0 +1,11 @@
+.searchBar {
+    padding: 2em;
+}
+
+.searchBar > *{
+    margin: 0 1em;
+}
+
+.searchBar .b-form-tags {
+    min-width: 60vw;
+}
