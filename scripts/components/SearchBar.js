@@ -1,3 +1,5 @@
+import { replaceSvg } from "../utils.js";
+
 const { Vue, Vuex } = globalThis;
 const { mapState, mapActions } = Vuex;
 
@@ -19,11 +21,14 @@ export const SearchBar = Vue.component("search-bar", {
                 v-on:click="clearTags"
                 variant="primary"
             >
-                <b-icon icon="x-circle" />
+                <svg ref="clearTags"></svg>
             </b-button>
         </b-form-group>
     `,
     props: [],
+    mounted () {
+        replaceSvg(this.$refs.clearTags, "x-circle");
+    },
     computed: {
         ...mapState([
             "searchTerms"
