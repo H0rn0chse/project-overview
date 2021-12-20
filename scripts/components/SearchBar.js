@@ -14,6 +14,13 @@ export const SearchBar = Vue.component("search-bar", {
                 separator=" ,;"
                 remove-on-delete
             />
+            <b-button
+                size="m"
+                v-on:click="clearTags"
+                variant="primary"
+            >
+                <b-icon icon="x-circle" />
+            </b-button>
         </b-form-group>
     `,
     props: [],
@@ -37,5 +44,8 @@ export const SearchBar = Vue.component("search-bar", {
         ...mapActions([
             "setSearchTerms"
         ]),
+        clearTags () {
+            this.searchTermsLocal = [];
+        }
     }
 });

@@ -3,9 +3,11 @@
 }
 
 .searchBar > *{
-    margin: 0 1em;
+    display: flex;
+    margin-right: 1em;
 }
 
 .searchBar .b-form-tags {
-    min-width: 60vw;
+    width: 60vw;
+    margin-right: 1em;
 }
