@@ -1,7 +1,7 @@
 const { feather } = globalThis;
 
 const dummy = document.createElement("div");
-export function replaceSvg (domRef, name, options = {}) {
+export function replaceSvgWithFeather (domRef, name, options = {}) {
     const svgContent = feather.icons[name].toSvg(options);
     dummy.innerHTML = svgContent;
     const svgNode = dummy.childNodes[0];

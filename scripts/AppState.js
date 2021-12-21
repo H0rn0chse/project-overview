@@ -6,7 +6,15 @@ const { Vuex } = globalThis;
 export const appState = new Vuex.Store({
     state: {
         searchTerms: [],
-        items: getItems(),
+        filteredItems: new Array(5)
+            .fill()
+            .map((value, index) => {
+                return {
+                    id: index,
+                    title: `Lorem Ipsum ${index}`,
+                    github: "https://github.com/H0rn0chse/project-overview",
+                };
+            })
     },
     mutations: {
         /*updateAll (state) {

@@ -1,5 +1,8 @@
 @import "colors.css";
+@import "App.css";
 @import "SearchBar.css";
+@import "ItemList.css";
+@import "Item.css";
 
 body {
     margin: 0;
@@ -8,9 +11,4 @@ body {
     position: relative;
     color: var(--common-font-secondary);
     background-color: var(--common-bg);
-}
-
-#app {
-    width: 100vw;
-    height: 100vh;
 }

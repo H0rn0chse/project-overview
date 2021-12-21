@@ -20,7 +20,7 @@ export function setItems (newItems){
 
 export function saveItems () {
     setDirtyState(true);
-	localStorage.setItem("items_projectoverview", JSON.stringify(items));
+    localStorage.setItem("items_projectoverview", JSON.stringify(items));
 }
 
 export function getSettings () {
@@ -33,5 +33,5 @@ export function setSettings (newSettings){
 
 export function saveSettings () {
     setDirtyState(true);
-	localStorage.setItem("settings_projectoverview", JSON.stringify(settings));
+    localStorage.setItem("settings_projectoverview", JSON.stringify(settings));
 }

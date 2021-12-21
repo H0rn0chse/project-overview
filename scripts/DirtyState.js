@@ -2,7 +2,7 @@ var dirty = false;
 
 window.addEventListener("beforeunload", (event) => {
     if (getDirtyState()) {
-        var message = 'You may export the latest changes';
+        var message = "You may export the latest changes";
         event.returnValue = message;
         return message;
     }

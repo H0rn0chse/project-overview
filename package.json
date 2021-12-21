@@ -20,6 +20,8 @@
   "homepage": "https://github.com/H0rn0chse/project-overview#readme",
   "dependencies": {},
   "devDependencies": {
-    "@h0rn0chse/socket-server": "^1.1.1"
+    "@h0rn0chse/socket-server": "^1.1.1",
+    "eslint": "^8.5.0",
+    "eslint-plugin-vue": "^8.2.0"
   }
 }

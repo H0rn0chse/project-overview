@@ -1,4 +1,4 @@
-import { replaceSvg } from "../utils.js";
+import { replaceSvgWithFeather } from "../utils.js";
 
 const { Vue, Vuex } = globalThis;
 const { mapState, mapActions } = Vuex;
@@ -27,7 +27,7 @@ export const SearchBar = Vue.component("search-bar", {
     `,
     props: [],
     mounted () {
-        replaceSvg(this.$refs.clearTags, "x-circle");
+        replaceSvgWithFeather(this.$refs.clearTags, "x-circle");
     },
     computed: {
         ...mapState([
@@ -43,7 +43,7 @@ export const SearchBar = Vue.component("search-bar", {
         }
     },
     data () {
-        return {}
+        return {};
     },
     methods: {
         ...mapActions([
