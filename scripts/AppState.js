@@ -12,7 +12,8 @@ export const appState = new Vuex.Store({
                 return {
                     id: index,
                     title: `Lorem Ipsum ${index}`,
-                    github: "https://github.com/H0rn0chse/project-overview",
+                    repository: "https://github.com/H0rn0chse/project-overview",
+                    github: true,
                 };
             })
     },

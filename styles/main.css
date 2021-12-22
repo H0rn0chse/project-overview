@@ -1,4 +1,5 @@
 @import "colors.css";
+@import "SimpleIcons.css";
 @import "App.css";
 @import "SideBar.css";
 @import "SearchBar.css";
@@ -12,4 +13,8 @@ body {
     position: relative;
     color: var(--common-font-secondary);
     background-color: var(--common-bg);
+}
+
+#hidden {
+    display: none;
 }

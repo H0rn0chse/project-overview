@@ -15,6 +15,7 @@ export const SideBar = Vue.component("side-bar", {
             </div>
             <div
                 class="sideItem"
+                style="position:relative; bottom:0"
             >
                 <svg ref="add"></svg>
             </div>
