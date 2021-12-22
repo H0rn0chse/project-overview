@@ -7,10 +7,16 @@
     background-color: var(--common-bg-dark);
 }
 
-.sideBar > * {
-    margin-top: 2em;
+.sideBar > .top {
+    margin-top: 1em;
 }
 
-.sideItem {
+.sideBar > .bottom {
+    margin-bottom: 1em;
+}
+
+.sideBar .sideItem {
+    margin-top: 1em;
+    margin-bottom: 1em;
     cursor: pointer;
 }

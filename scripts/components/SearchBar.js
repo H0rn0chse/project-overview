@@ -17,6 +17,7 @@ export const SearchBar = Vue.component("search-bar", {
             />
             <b-button
                 size="m"
+                title="Clear All Tags"
                 v-on:click="clearTags"
                 variant="primary"
             >
@@ -51,5 +52,5 @@ export const SearchBar = Vue.component("search-bar", {
         clearTags () {
             this.searchTermsLocal = [];
         }
-    }
+    },
 });

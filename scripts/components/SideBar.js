@@ -6,18 +6,27 @@ const { mapState, mapActions } = Vuex;
 export const SideBar = Vue.component("side-bar", {
     template: `
         <div
-            class="sideBar d-flex flex-column align-items-center"
+            class="sideBar d-flex flex-column align-items-center justify-content-between"
         >
             <div
-                class="sideItem"
+                class="top d-flex flex-column align-items-center"
             >
-                <svg ref="settings"></svg>
+                <div
+                    title="Settings"
+                    class="sideItem"
+                >
+                    <svg ref="settings"></svg>
+                </div>
             </div>
             <div
-                class="sideItem"
-                style="position:relative; bottom:0"
+                class="bottom d-flex flex-column align-items-center"
             >
-                <svg ref="add"></svg>
+                <div
+                    title="Add new Project"
+                    class="sideItem"
+                >
+                    <svg ref="add"></svg>
+                </div>
             </div>
         </div>
     `,
