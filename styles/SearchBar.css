@@ -1,5 +1,8 @@
 .searchBar {
+    top: 0;
+    position: sticky;
     padding: 2em;
+    background-color: var(--common-bg);
 }
 
 .searchBar > *{

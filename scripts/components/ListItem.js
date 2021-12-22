@@ -15,7 +15,7 @@ export const ListItem = Vue.component("list-item", {
         ...mapState([]),
     },
     data () {
-        return {}
+        return {};
     },
     methods: {
         ...mapActions([]),

@@ -6,11 +6,10 @@ const { mapState, mapActions } = Vuex;
 export const SearchBar = Vue.component("search-bar", {
     template: `
         <b-form-group
-            label="Enter search terms"
-            label-for="search-terms"
             class="searchBar d-flex justify-content-center align-items-center"
         >
             <b-form-tags
+                placeholder="Enter search terms..."
                 input-id="search-terms"
                 v-model="searchTermsLocal"
                 separator=" ,;"
