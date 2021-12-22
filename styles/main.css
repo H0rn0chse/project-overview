@@ -4,6 +4,8 @@
 @import "SearchBar.css";
 @import "ItemList.css";
 @import "ListItem.css";
+@import "ItemDescription.css";
+@import "SettingsDialog.css";
 
 body {
     margin: 0;

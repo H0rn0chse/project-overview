@@ -14,6 +14,7 @@ export const appState = new Vuex.Store({
                     title: `Lorem Ipsum ${index}`,
                     repository: "https://github.com/H0rn0chse/project-overview",
                     github: true,
+                    relativePath: "D:\\Aaron\\Dev\\socket-server",
                 };
             })
     },

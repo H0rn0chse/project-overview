@@ -3,6 +3,8 @@ import { ListItem } from "./components/ListItem.js";
 import { ItemList } from "./components/ItemList.js";
 import { SearchBar } from "./components/SearchBar.js";
 import { SideBar } from "./components/SideBar.js";
+import { ItemDescription } from "./components/ItemDescription.js";
+import { SettingsDialog } from "./components/SettingsDialog.js";
 
 const { Vue, Vuex, vueScrollbar } = globalThis;
 const { mapState, mapActions } = Vuex;
@@ -12,6 +14,8 @@ const componentList = [
     SearchBar,
     ItemList,
     ListItem,
+    ItemDescription,
+    SettingsDialog,
 ];
 
 Vue.component("vue-custom-scrollbar", vueScrollbar);
