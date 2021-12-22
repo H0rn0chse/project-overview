@@ -1,8 +1,9 @@
 @import "colors.css";
 @import "App.css";
+@import "SideBar.css";
 @import "SearchBar.css";
 @import "ItemList.css";
-@import "Item.css";
+@import "ListItem.css";
 
 body {
     margin: 0;

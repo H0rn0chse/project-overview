@@ -8,18 +8,6 @@
 
 
     --common-bg: #36393f;
+    --common-bg-light: #4B4F58;
     --common-bg-dark: #26282C;
-
-    /*=========== Elements ===============*/
-    --acknowledgements: #e2b007;
-
-    --options-bg: var(--common-bg);
-
-    --preview-bg: var(--common-bg);
-    --loading-bg: #FFFFFF;
-
-    --timeline-bg: var(--common-bg-dark);
-    --timeline-bg-hover: #122932;
-    --timeline-item-bg: #808080;
-    --timeline-placeholder: var(--common-primary-light);
 }

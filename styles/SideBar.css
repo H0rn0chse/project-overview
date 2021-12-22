@@ -1,0 +1,16 @@
+.sideBar {
+    width: 5em;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--common-bg-dark);
+}
+
+.sideBar > * {
+    margin-top: 2em;
+}
+
+.sideItem {
+    cursor: pointer;
+}

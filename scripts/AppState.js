@@ -6,7 +6,7 @@ const { Vuex } = globalThis;
 export const appState = new Vuex.Store({
     state: {
         searchTerms: [],
-        filteredItems: new Array(10)
+        filteredItems: new Array(20)
             .fill()
             .map((value, index) => {
                 return {

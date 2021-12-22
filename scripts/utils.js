@@ -8,3 +8,7 @@ export function replaceSvgWithFeather (domRef, name, options = {}) {
     dummy.innerHTML = "";
     domRef.replaceWith(svgNode);
 }
+
+export function getColor (sKey) {
+    return window.getComputedStyle(document.documentElement).getPropertyValue(sKey);
+}
