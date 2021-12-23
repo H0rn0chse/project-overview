@@ -18,7 +18,7 @@ export const SearchBar = Vue.component("search-bar", {
             <b-button
                 size="m"
                 title="Clear All Tags"
-                v-on:click="clearTags"
+                @click="clearTags"
                 variant="primary"
             >
                 <svg ref="clearTags"></svg>

@@ -14,56 +14,56 @@ export const ListItem = Vue.component("list-item", {
                 class="linkList"
             >
                 <b-link
-                    v-if="data.relativePath"
-                    v-on:click="stopPropagation"
-                    :href="absolutePath"
+                    showif="data.localPath"
+                    @click="stopPropagation"
+                    :href="vscodePath"
                     target="_blank"
                 >
                     <svg ref="vscode"></svg>
                 </b-link>
                 <b-link
-                    v-if="data.github"
-                    v-on:click="stopPropagation"
-                    :href="data.repository"
+                    v-show="data.repoType === 'github'"
+                    @click="stopPropagation"
+                    :href="data.repoUrl"
                     target="_blank"
                 >
                     <svg ref="github"></svg>
                 </b-link>
                 <b-link
-                    v-if="data.gitlab"
-                    v-on:click="stopPropagation"
-                    :href="data.repository"
+                    v-show="data.repoType === 'gitlab'"
+                    @click="stopPropagation"
+                    :href="data.repoUrl"
                     target="_blank"
                 >
                     <svg ref="gitlab"></svg>
                 </b-link>
                 <b-link
-                    v-if="data.bitbucket"
-                    v-on:click="stopPropagation"
-                    :href="data.repository"
+                    v-show="data.repoType === 'bitbucket'"
+                    @click="stopPropagation"
+                    :href="data.repoUrl"
                     target="_blank"
                 >
                     <svg ref="bitbucket"></svg>
                 </b-link>
                 <b-link
-                    v-if="data.git"
-                    v-on:click="stopPropagation"
-                    :href="data.repository"
+                    v-show="data.repoType === 'git'"
+                    @click="stopPropagation"
+                    :href="data.repoUrl"
                     target="_blank"
                 >
                     <svg ref="git"></svg>
                 </b-link>
                 <b-link
-                    v-if="data.npm"
-                    v-on:click="stopPropagation"
+                    v-show="data.npm"
+                    @click="stopPropagation"
                     :href="data.npm"
                     target="_blank"
                 >
                     <svg ref="npm"></svg>
                 </b-link>
                 <b-link
-                    v-if="data.demo"
-                    v-on:click="stopPropagation"
+                    v-show="data.demo"
+                    @click="stopPropagation"
                     :href="data.demo"
                     target="_blank"
                 >
@@ -72,13 +72,13 @@ export const ListItem = Vue.component("list-item", {
                 </b-link>
             </div>
             <item-description
-                :id="modalId"
-                :data="data"
+                :modalId="modalId"
+                :itemId="data.id"
             />
         </div>
     `,
     props: [
-        "data"
+        "data",
     ],
     mounted () {
         const options = {
@@ -98,15 +98,20 @@ export const ListItem = Vue.component("list-item", {
         this.$refs.demo && replaceSvgWithFeather(this.$refs.demo, "play-circle", options);
     },
     computed: {
-        ...mapState([]),
+        ...mapState([
+            "devFolder"
+        ]),
         modalId: {
             get () {
                 return `${this.data.id}_detailModal`;
             }
         },
-        absolutePath: {
+        vscodePath: {
             get () {
-                return `vscode://file/${this.data.relativePath}`;
+                if (this.data.pathType === "relative") {
+                    return `vscode://file/${this.devFolder}${this.data.localPath}`;
+                }
+                return `vscode://file/${this.data.localPath}`;
             }
         }
     },

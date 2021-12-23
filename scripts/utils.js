@@ -45,3 +45,7 @@ export function replaceSvgWithSimpleIcons (domRef, name, options = {}) {
 
     domRef.replaceWith(svgNode);
 }
+
+export function deepClone (value) {
+    return JSON.parse(JSON.stringify(value));
+}
