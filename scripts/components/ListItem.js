@@ -86,16 +86,16 @@ export const ListItem = Vue.component("list-item", {
             height: "1.5em",
         };
 
-        this.$refs.vscode && replaceSvgWithSimpleIcons(this.$refs.vscode, "visualstudiocode", options);
-        this.$refs.github && replaceSvgWithSimpleIcons(this.$refs.github, "github", options);
-        this.$refs.gitlab && replaceSvgWithSimpleIcons(this.$refs.gitlab, "gitlab", options);
-        this.$refs.bitbucket && replaceSvgWithSimpleIcons(this.$refs.bitbucket, "bitbucket", options);
-        this.$refs.git && replaceSvgWithSimpleIcons(this.$refs.git, "git", options);
-        this.$refs.npm && replaceSvgWithSimpleIcons(this.$refs.npm, "npm", options);
+        replaceSvgWithSimpleIcons(this.$refs.vscode, "visualstudiocode", options);
+        replaceSvgWithSimpleIcons(this.$refs.github, "github", options);
+        replaceSvgWithSimpleIcons(this.$refs.gitlab, "gitlab", options);
+        replaceSvgWithSimpleIcons(this.$refs.bitbucket, "bitbucket", options);
+        replaceSvgWithSimpleIcons(this.$refs.git, "git", options);
+        replaceSvgWithSimpleIcons(this.$refs.npm, "npm", options);
 
         options.width = "1em",
         options.height = "1em",
-        this.$refs.demo && replaceSvgWithFeather(this.$refs.demo, "play-circle", options);
+        replaceSvgWithFeather(this.$refs.demo, "play-circle", options);
     },
     computed: {
         ...mapState([

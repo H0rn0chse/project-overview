@@ -18,6 +18,18 @@ export const SideBar = Vue.component("side-bar", {
                 >
                     <svg ref="settings"></svg>
                 </div>
+                <div
+                    title="Import"
+                    class="sideItem"
+                >
+                    <svg ref="import"></svg>
+                </div>
+                <div
+                    title="Export"
+                    class="sideItem"
+                >
+                    <svg ref="export"></svg>
+                </div>
             </div>
             <div
                 class="bottom d-flex flex-column align-items-center"
@@ -41,6 +53,8 @@ export const SideBar = Vue.component("side-bar", {
         };
 
         replaceSvgWithFeather(this.$refs.settings, "settings", options);
+        replaceSvgWithFeather(this.$refs.import, "upload-cloud", options);
+        replaceSvgWithFeather(this.$refs.export, "download-cloud", options);
         replaceSvgWithFeather(this.$refs.add, "plus-square", options);
     },
     computed: {
