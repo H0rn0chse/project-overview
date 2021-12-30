@@ -1,38 +1,28 @@
 import { setDirtyState } from "./DirtyState.js";
-import { getItems } from "./ItemManger.js";
+import { getItems, getSettings, setItems, setSettings, saveItems, saveSettings } from "./ItemManager.js";
 import { deepClone } from "./utils.js";
 
 const { Vuex } = globalThis;
 
-const items = new Array(20)
-    .fill()
-    .map((value, index) => {
-        return {
-            id: index,
-            title: `Lorem Ipsum ${index}`,
-            repoUrl: "https://github.com/H0rn0chse/project-overview",
-            repoType: "github",
-            localPath: "socket-server",
-            pathType: "relative",
-            npm: "",
-            demo: "https://h0rn0chse.github.io/project-overview/",
-            description: "",
-            tags: ["test123"],
-        };
-    });
+const items = getItems();
+const settings = getSettings();
 
 export const appState = new Vuex.Store({
     state: {
         searchTerms: [],
         itemCopy: items[0],
         filteredItems: items,
-        devFolder: "C:\\User\\Dev\\",
-        lastItemId: items.length,
+        devFolder: settings.devFolder || "C:\\User\\Dev\\",
+        lastItemId: typeof settings.lastItemId === "number" ? settings.lastItemId : 0,
+        ignoreDirtyState: typeof settings.ignoreDirtyState === "boolean" ? settings.ignoreDirtyState : false,
         items
     },
     mutations: {
         setDevFolder (state, devFolder) {
             state.devFolder = devFolder;
+        },
+        setIgnoreDirtyState (state, ignoreDirtyState) {
+            state.ignoreDirtyState = ignoreDirtyState;
         },
         setSearchTerms (state, searchTerms) {
             state.searchTerms = searchTerms;
@@ -114,7 +104,27 @@ export const appState = new Vuex.Store({
                 .sort((itemA, itemB) => {
                     return itemA.title.localeCompare(itemB.title);
                 });
-        }
+        },
+        saveItems (state) {
+            const items = deepClone(state.items);
+            setItems(items);
+            saveItems();
+        },
+        saveSettings (state) {
+            const settings = {
+                devFolder: state.devFolder,
+                lastItemId: state.lastItemId,
+                ignoreDirtyState: state.ignoreDirtyState,
+            };
+            setSettings(settings);
+            saveSettings();
+        },
+        importData (state, data) {
+            state.items = deepClone(data.items);
+            state.devFolder = data.settings.devFolder;
+            state.lastItemId = data.settings.lastItemId;
+            state.ignoreDirtyState = data.settings.ignoreDirtyState;
+        },
     },
     actions: {
         setSearchTerms (context, searchTerms) {
@@ -129,18 +139,34 @@ export const appState = new Vuex.Store({
         },
         addCopyToItems (context) {
             context.commit("addCopyToItems");
+            context.commit("saveItems");
+            context.commit("saveSettings");
             context.commit("applySearch");
         },
         saveCopyToItem (context) {
             context.commit("saveCopyToItem");
+            context.commit("saveItems");
             context.commit("applySearch");
         },
         deleteCopiedItem (context) {
             context.commit("deleteCopiedItem");
+            context.commit("saveItems");
             context.commit("applySearch");
         },
         setDevFolder (context, devFolder) {
             context.commit("setDevFolder", devFolder);
+            context.commit("saveSettings");
+            context.commit("applySearch");
+        },
+        setIgnoreDirtyState (context, ignoreDirtyState) {
+            context.commit("setIgnoreDirtyState", ignoreDirtyState);
+            context.commit("saveSettings");
+        },
+        importData (context, data) {
+            context.commit("importData", data);
+            context.commit("saveItems");
+            context.commit("saveSettings");
+            setDirtyState(false);
             context.commit("applySearch");
         }
     },

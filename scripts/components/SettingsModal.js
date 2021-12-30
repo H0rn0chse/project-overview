@@ -23,6 +23,18 @@ export const SettingsModal = Vue.component("settings-modal", {
                     v-model="devFolderLocal"
                 />
             </b-form-group>
+            <b-form-group
+                id="fieldset-horizontal"
+                label-cols="auto"
+                label="IgnoreDirtyState"
+                label-for="checkbox-ignoreDirtyState"
+                class="w-100"
+            >
+                <b-form-checkbox
+                    id="checkbox-ignoreDirtyState"
+                    v-model="ignoreDirtyStateLocal"
+                />
+            </b-form-group>
             <template #modal-footer="{ hide, cancel }">
                 <b-button
                     @click="saveSettings(hide)"
@@ -41,23 +53,28 @@ export const SettingsModal = Vue.component("settings-modal", {
     props: [],
     computed: {
         ...mapState([
-            "devFolder"
+            "devFolder",
+            "ignoreDirtyState"
         ]),
     },
     data () {
         return {
-            devFolderLocal: ""
+            devFolderLocal: "",
+            ignoreDirtyStateLocal: false,
         };
     },
     methods: {
         ...mapActions([
-            "setDevFolder"
+            "setDevFolder",
+            "setIgnoreDirtyState",
         ]),
         handleShow () {
+            this.ignoreDirtyStateLocal = this.ignoreDirtyState;
             this.devFolderLocal = this.devFolder;
         },
         saveSettings (hide) {
             this.setDevFolder(this.devFolderLocal);
+            this.setIgnoreDirtyState(this.ignoreDirtyStateLocal);
             hide();
         }
     }

@@ -1,3 +1,4 @@
+import { exportData, importData } from "../ImportExport.js";
 import { getColor, replaceSvgWithFeather } from "../utils.js";
 
 const { Vue, Vuex } = globalThis;
@@ -21,12 +22,14 @@ export const SideBar = Vue.component("side-bar", {
                 <div
                     title="Import"
                     class="sideItem"
+                    @click="importData"
                 >
                     <svg ref="import"></svg>
                 </div>
                 <div
                     title="Export"
                     class="sideItem"
+                    @click="exportData"
                 >
                     <svg ref="export"></svg>
                 </div>
@@ -67,6 +70,8 @@ export const SideBar = Vue.component("side-bar", {
         ...mapActions([]),
         showAddItemModal () {
             this.$bvModal.show("addItemModal");
-        }
+        },
+        importData,
+        exportData,
     }
 });

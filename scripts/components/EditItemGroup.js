@@ -76,11 +76,11 @@ export const EditItemGroup = Vue.component("edit-item-group", {
             id="fieldset-horizontal"
             label-cols="auto"
             label="Description"
-            label-for="input-description"
+            label-for="textarea-description"
             class="w-100"
         >
             <b-form-textarea
-                id="input-description"
+                id="textarea-description"
                 v-model="data.description"
                 placeholder="Enter something..."
                 rows="3"

@@ -1,14 +1,18 @@
-var dirty = false;
+import { appState } from "./AppState.js";
+
+let dirty = false;
 
 window.addEventListener("beforeunload", (event) => {
     if (getDirtyState()) {
-        var message = "You may export the latest changes";
+        const message = "You may export the latest changes";
         event.returnValue = message;
-        return message;
     }
 });
 
 export function getDirtyState () {
+    if (appState.state.ignoreDirtyState) {
+        return false;
+    }
     return dirty;
 }
 
