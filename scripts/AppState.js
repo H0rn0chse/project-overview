@@ -64,7 +64,7 @@ export const appState = new Vuex.Store({
                 state.lastItemId = state.itemCopy.id;
                 state.items.push(deepClone(state.itemCopy));
             } else {
-                console.error(`The itemId ${itemId} is in use!, please use "saveCopyToItem"`);
+                console.error(`The itemId "${itemId}" is in use!, please use "saveCopyToItem"`);
             }
         },
         saveCopyToItem (state) {
@@ -72,10 +72,10 @@ export const appState = new Vuex.Store({
             const itemIndex = state.items.findIndex((item) => {
                 return item.id === itemId;
             });
-            if (itemIndex > 0) {
+            if (itemIndex > -1) {
                 state.items[itemIndex] = deepClone(state.itemCopy);
             } else {
-                console.error(`The itemId ${itemId} is unused!, please use "addCopyToItems"`);
+                console.error(`The itemId "${itemId}" is unused!, please use "addCopyToItems"`);
             }
         },
         deleteCopiedItem (state) {
@@ -86,7 +86,29 @@ export const appState = new Vuex.Store({
             state.items.splice(itemIndex, 1);
         },
         applySearch (state) {
-            state.filteredItems = deepClone(state.items);
+            state.filteredItems = deepClone(state.items)
+                .sort((itemA, itemB) => {
+                    return itemA.title.localeCompare(itemB.title);
+                })
+                .filter((item) => {
+                    if (state.searchTerms.length === 0) {
+                        return true;
+                    }
+
+                    return state.searchTerms.reduce((matches, term) => {
+                        // results should match all terms
+                        if (!matches) {
+                            return false;
+                        }
+
+                        let matchesTerm = item.title.includes(term);
+                        matchesTerm = matchesTerm || item.description.includes(term);
+                        matchesTerm = matchesTerm || item.tags.reduce((result, tag) => {
+                            return result || tag.includes(term);
+                        }, false);
+                        return matchesTerm;
+                    }, true);
+                });
         }
     },
     actions: {
@@ -114,5 +136,7 @@ export const appState = new Vuex.Store({
         },
     },
 });
+
+appState.commit("applySearch");
 
 globalThis.AppState = appState;
