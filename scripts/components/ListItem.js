@@ -7,7 +7,7 @@ export const ListItem = Vue.component("list-item", {
     template: `
         <div
             class="listItem"
-            v-b-modal="modalId"
+            @click="showEditItemModal"
         >
             <h3>{{data.title}}</h3>
             <div
@@ -71,10 +71,6 @@ export const ListItem = Vue.component("list-item", {
                     Demo
                 </b-link>
             </div>
-            <item-description
-                :modalId="modalId"
-                :itemId="data.id"
-            />
         </div>
     `,
     props: [
@@ -119,9 +115,15 @@ export const ListItem = Vue.component("list-item", {
         return {};
     },
     methods: {
-        ...mapActions([]),
+        ...mapActions([
+            "copyItem"
+        ]),
         stopPropagation (evt) {
             evt.stopPropagation();
-        }
+        },
+        showEditItemModal () {
+            this.copyItem(this.data.id);
+            this.$bvModal.show("editItemModal");
+        },
     }
 });

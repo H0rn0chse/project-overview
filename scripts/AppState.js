@@ -27,11 +27,27 @@ export const appState = new Vuex.Store({
         itemCopy: items[0],
         filteredItems: items,
         devFolder: "D:\\Aaron\\Dev\\",
+        lastItemId: items.length,
         items
     },
     mutations: {
         setSearchTerms (state, searchTerms) {
             state.searchTerms = searchTerms;
+        },
+        createDefaultItemCopy (state) {
+            const newItem = {
+                id: state.lastItemId + 1,
+                title: "new Project",
+                repoUrl: "https://github.com/user/new-project",
+                repoType: "github",
+                localPath: "new-project",
+                pathType: "relative",
+                npm: "",
+                demo: "",
+                description: "",
+                tags: [],
+            };
+            state.itemCopy = newItem;
         },
         copyItem (state, itemId) {
             const item = state.items.find((item) => {
@@ -39,12 +55,28 @@ export const appState = new Vuex.Store({
             });
             state.itemCopy = deepClone(item);
         },
+        addCopyToItems (state) {
+            const itemId = state.itemCopy.id;
+            const itemIndex = state.items.findIndex((item) => {
+                return item.id === itemId;
+            });
+            if (itemIndex === -1) {
+                state.lastItemId = state.itemCopy.id;
+                state.items.push(deepClone(state.itemCopy));
+            } else {
+                console.error(`The itemId ${itemId} is in use!, please use "saveCopyToItem"`);
+            }
+        },
         saveCopyToItem (state) {
             const itemId = state.itemCopy.id;
             const itemIndex = state.items.findIndex((item) => {
                 return item.id === itemId;
             });
-            state.items[itemIndex] = deepClone(state.itemCopy);
+            if (itemIndex > 0) {
+                state.items[itemIndex] = deepClone(state.itemCopy);
+            } else {
+                console.error(`The itemId ${itemId} is unused!, please use "addCopyToItems"`);
+            }
         },
         deleteCopiedItem (state) {
             const itemId = state.itemCopy.id;
@@ -62,8 +94,15 @@ export const appState = new Vuex.Store({
             context.commit("setSearchTerms", searchTerms);
             context.commit("applySearch");
         },
+        createDefaultItemCopy (context) {
+            context.commit("createDefaultItemCopy");
+        },
         copyItem (context, itemId) {
             context.commit("copyItem", itemId);
+        },
+        addCopyToItems (context) {
+            context.commit("addCopyToItems");
+            context.commit("applySearch");
         },
         saveCopyToItem (context) {
             context.commit("saveCopyToItem");

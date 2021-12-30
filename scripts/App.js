@@ -3,8 +3,10 @@ import { ListItem } from "./components/ListItem.js";
 import { ItemList } from "./components/ItemList.js";
 import { SearchBar } from "./components/SearchBar.js";
 import { SideBar } from "./components/SideBar.js";
-import { ItemDescription } from "./components/ItemDescription.js";
 import { SettingsDialog } from "./components/SettingsDialog.js";
+import { EditItemGroup } from "./components/EditItemGroup.js";
+import { EditItemModal } from "./components/EditItemModal.js";
+import { AddItemModal } from "./components/AddItemModal.js";
 
 const { Vue, Vuex, vueScrollbar } = globalThis;
 const { mapState, mapActions } = Vuex;
@@ -14,7 +16,9 @@ const componentList = [
     SearchBar,
     ItemList,
     ListItem,
-    ItemDescription,
+    EditItemGroup,
+    EditItemModal,
+    AddItemModal,
     SettingsDialog,
 ];
 
@@ -23,7 +27,6 @@ Vue.component("vue-custom-scrollbar", vueScrollbar);
 const app = new Vue({
     el: "#app",
     template: `
-
         <b-container
             id="app"
             fluid
@@ -37,7 +40,8 @@ const app = new Vue({
                 <item-list/>
             </vue-custom-scrollbar>
             <side-bar/>
-
+            <edit-item-modal/>
+            <add-item-modal/>
         </b-container>
     `,
     store: appState,

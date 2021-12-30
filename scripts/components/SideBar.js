@@ -37,6 +37,7 @@ export const SideBar = Vue.component("side-bar", {
                 <div
                     title="Add new Project"
                     class="sideItem"
+                    @click="showAddItemModal"
                 >
                     <svg ref="add"></svg>
                 </div>
@@ -65,5 +66,8 @@ export const SideBar = Vue.component("side-bar", {
     },
     methods: {
         ...mapActions([]),
+        showAddItemModal () {
+            this.$bvModal.show("addItemModal");
+        }
     }
 });
