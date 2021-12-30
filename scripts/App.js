@@ -36,6 +36,7 @@ const app = new Vue({
             <vue-custom-scrollbar
                 :settings="scrollSettings"
                 class="itemScrollArea d-flex flex-column justify-content-start align-items-center"
+                ref="scrollbar"
             >
                 <item-list/>
             </vue-custom-scrollbar>
@@ -45,8 +46,17 @@ const app = new Vue({
         </b-container>
     `,
     store: appState,
+    mounted () {
+        appState.watch(() => {
+            return this.filteredItems;
+        },
+        () => {
+            this.$refs.scrollbar.update();
+        });
+    },
     computed: {
         ...mapState([
+            "filteredItems"
         ]),
     },
     data () {
