@@ -3,7 +3,7 @@ import { ListItem } from "./components/ListItem.js";
 import { ItemList } from "./components/ItemList.js";
 import { SearchBar } from "./components/SearchBar.js";
 import { SideBar } from "./components/SideBar.js";
-import { SettingsDialog } from "./components/SettingsDialog.js";
+import { SettingsModal } from "./components/SettingsModal.js";
 import { EditItemGroup } from "./components/EditItemGroup.js";
 import { EditItemModal } from "./components/EditItemModal.js";
 import { AddItemModal } from "./components/AddItemModal.js";
@@ -19,7 +19,7 @@ const componentList = [
     EditItemGroup,
     EditItemModal,
     AddItemModal,
-    SettingsDialog,
+    SettingsModal,
 ];
 
 Vue.component("vue-custom-scrollbar", vueScrollbar);
@@ -43,6 +43,7 @@ const app = new Vue({
             <side-bar/>
             <edit-item-modal/>
             <add-item-modal/>
+            <settings-modal/>
         </b-container>
     `,
     store: appState,

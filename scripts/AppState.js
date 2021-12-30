@@ -26,11 +26,14 @@ export const appState = new Vuex.Store({
         searchTerms: [],
         itemCopy: items[0],
         filteredItems: items,
-        devFolder: "D:\\Aaron\\Dev\\",
+        devFolder: "C:\\User\\Dev\\",
         lastItemId: items.length,
         items
     },
     mutations: {
+        setDevFolder (state, devFolder) {
+            state.devFolder = devFolder;
+        },
         setSearchTerms (state, searchTerms) {
             state.searchTerms = searchTerms;
         },
@@ -136,6 +139,10 @@ export const appState = new Vuex.Store({
             context.commit("deleteCopiedItem");
             context.commit("applySearch");
         },
+        setDevFolder (context, devFolder) {
+            context.commit("setDevFolder", devFolder);
+            context.commit("applySearch");
+        }
     },
 });
 

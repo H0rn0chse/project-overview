@@ -14,7 +14,7 @@ export const SideBar = Vue.component("side-bar", {
                 <div
                     title="Settings"
                     class="sideItem"
-                    v-b-modal="'settingsDialog'"
+                    v-b-modal="'settingsModal'"
                 >
                     <svg ref="settings"></svg>
                 </div>
@@ -42,7 +42,6 @@ export const SideBar = Vue.component("side-bar", {
                     <svg ref="add"></svg>
                 </div>
             </div>
-            <settings-dialog/>
         </div>
     `,
     props: [],
