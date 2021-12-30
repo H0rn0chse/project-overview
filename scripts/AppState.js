@@ -87,27 +87,29 @@ export const appState = new Vuex.Store({
         },
         applySearch (state) {
             state.filteredItems = deepClone(state.items)
-                .sort((itemA, itemB) => {
-                    return itemA.title.localeCompare(itemB.title);
-                })
                 .filter((item) => {
                     if (state.searchTerms.length === 0) {
                         return true;
                     }
 
-                    return state.searchTerms.reduce((matches, term) => {
+                    const matchesAllTerms = state.searchTerms.reduce((matches, term) => {
+                        const lowerCaseTerm = term.toLowerCase();
                         // results should match all terms
                         if (!matches) {
                             return false;
                         }
 
-                        let matchesTerm = item.title.includes(term);
-                        matchesTerm = matchesTerm || item.description.includes(term);
+                        let matchesTerm = item.title.toLowerCase().includes(lowerCaseTerm);
+                        matchesTerm = matchesTerm || item.description.toLowerCase().includes(lowerCaseTerm);
                         matchesTerm = matchesTerm || item.tags.reduce((result, tag) => {
-                            return result || tag.includes(term);
+                            return result || tag.toLowerCase().includes(lowerCaseTerm);
                         }, false);
                         return matchesTerm;
                     }, true);
+                    return matchesAllTerms;
+                })
+                .sort((itemA, itemB) => {
+                    return itemA.title.localeCompare(itemB.title);
                 });
         }
     },
