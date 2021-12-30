@@ -5,8 +5,11 @@ export const EditItemModal = Vue.component("edit-item-modal", {
     template: `
         <b-modal
             id="editItemModal"
+            ref="modal"
             class="editItemModal"
             size="lg"
+            @show="handleShow"
+            @hide="handleHide"
         >
             <template #modal-title>
                 <b-form-input
@@ -15,9 +18,9 @@ export const EditItemModal = Vue.component("edit-item-modal", {
                 />
             </template>
             <edit-item-group/>
-            <template #modal-footer="{ hide, cancel }">
+            <template #modal-footer="{ cancel }">
                 <b-button
-                    @click="saveItem(hide)"
+                    @click="saveItem"
                     variant="success"
                 >
                     Save
@@ -28,7 +31,7 @@ export const EditItemModal = Vue.component("edit-item-modal", {
                     Cancel
                 </b-button>
                 <b-button
-                    @click="deleteItem(hide)"
+                    @click="deleteItem"
                     variant="danger"
                 >
                     Delete
@@ -37,34 +40,74 @@ export const EditItemModal = Vue.component("edit-item-modal", {
         </b-modal>
     `,
     props: [],
+    mounted () {
+        document.addEventListener("keydown", (evt) => {
+            if (this.$refs.modal.isVisible && (evt.metaKey || evt.ctrlKey) && evt.key === "s") {
+                evt.preventDefault();
+                this.saveItem();
+            }
+        });
+    },
     computed: {
         ...mapState({
             data: "itemCopy"
         }),
+        dirtyState: {
+            get () {
+                return this.localCopy !== JSON.stringify(this.data);
+            }
+        },
     },
     data () {
-        return {};
+        return {
+            localCopy: {},
+        };
     },
     methods: {
         ...mapActions([
             "saveCopyToItem",
             "deleteCopiedItem"
         ]),
-        saveItem (hide) {
-            this.saveCopyToItem();
-            hide();
+        saveItem () {
+            if (this.dirtyState) {
+                this.saveCopyToItem();
+                this.updateLocalCopy();
+            }
+            this.$refs.modal.hide();
         },
-        deleteItem (hide) {
+        deleteItem () {
             this.$bvModal.msgBoxConfirm("This Action will permanently delete the item.\nAre you sure?")
                 .then((value) => {
                     if (value) {
                         this.deleteCopiedItem();
+                        this.updateLocalCopy();
                     }
-                    hide();
+                    this.$refs.modal.hide();
                 })
                 .catch((err) => {
-                    // An error occurred
+                    console.error(err);
                 });
+        },
+        handleShow () {
+            this.updateLocalCopy();
+        },
+        updateLocalCopy () {
+            this.localCopy = JSON.stringify(this.data);
+        },
+        handleHide (evt) {
+            if (this.dirtyState) {
+                evt.preventDefault();
+                this.$bvModal.msgBoxConfirm("You have unsaved changes.\nContinue?")
+                    .then((value) => {
+                        if (value) {
+                            this.updateLocalCopy();
+                            this.$refs.modal.hide();
+                        }
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+            }
         },
     }
 });

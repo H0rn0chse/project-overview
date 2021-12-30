@@ -5,9 +5,11 @@ export const AddItemModal = Vue.component("add-item-modal", {
     template: `
         <b-modal
             id="addItemModal"
+            ref="modal"
             class="addItemModal"
             size="lg"
-            @show="createDefaultItemCopy"
+            @show="handleShow"
+            @hide="handleHide"
         >
             <template #modal-title>
                 <b-form-input
@@ -16,9 +18,9 @@ export const AddItemModal = Vue.component("add-item-modal", {
                 />
             </template>
             <edit-item-group/>
-            <template #modal-footer="{ hide, cancel }">
+            <template #modal-footer="{ cancel }">
                 <b-button
-                    @click="saveItem(hide)"
+                    @click="saveItem"
                     variant="success"
                 >
                     Add
@@ -32,22 +34,60 @@ export const AddItemModal = Vue.component("add-item-modal", {
         </b-modal>
     `,
     props: [],
+    mounted () {
+        document.addEventListener("keydown", (evt) => {
+            if (this.$refs.modal.isVisible && (evt.metaKey || evt.ctrlKey) && evt.key === "s") {
+                evt.preventDefault();
+                this.saveItem();
+            }
+        });
+    },
     computed: {
         ...mapState({
             data: "itemCopy"
         }),
+        dirtyState: {
+            get () {
+                return this.localCopy !== JSON.stringify(this.data);
+            }
+        },
     },
     data () {
-        return {};
+        return {
+            localCopy: {},
+        };
     },
     methods: {
         ...mapActions([
             "createDefaultItemCopy",
             "addCopyToItems",
         ]),
-        saveItem (hide) {
+        saveItem () {
             this.addCopyToItems();
-            hide();
+            this.updateLocalCopy();
+            this.$refs.modal.hide();
+        },
+        handleShow () {
+            this.createDefaultItemCopy();
+            this.updateLocalCopy();
+        },
+        updateLocalCopy () {
+            this.localCopy = JSON.stringify(this.data);
+        },
+        handleHide (evt) {
+            if (this.dirtyState) {
+                evt.preventDefault();
+                this.$bvModal.msgBoxConfirm("You have unsaved changes.\nContinue?")
+                    .then((value) => {
+                        if (value) {
+                            this.updateLocalCopy();
+                            this.$refs.modal.hide();
+                        }
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+            }
         },
     }
 });
