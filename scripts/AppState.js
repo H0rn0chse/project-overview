@@ -14,11 +14,26 @@ items.forEach((item) => {
         item.packageUrl = item.npm;
         item.packageType = "npm";
         delete item.npm;
+    // eslint-disable-next-line no-prototype-builtins
     } else if (item.hasOwnProperty("npm")) {
         item.packageType = "npm";
+        item.packageUrl = "";
         delete item.npm;
     }
+
+    // eslint-disable-next-line no-prototype-builtins
+    if (!item.hasOwnProperty("packageType")) {
+        item.packageType = "";
+        item.packageUrl = "";
+    }
+
+    // eslint-disable-next-line no-prototype-builtins
+    if (!item.hasOwnProperty("boardType")) {
+        item.boardType = "";
+        item.boardUrl = "";
+    }
 });
+
 /*================================================================*/
 
 export const appState = new Vuex.Store({
@@ -29,32 +44,18 @@ export const appState = new Vuex.Store({
         devFolder: settings.devFolder || defaults.devFolder,
         lastItemId: typeof settings.lastItemId === "number" ? settings.lastItemId : 0,
         ignoreDirtyState: typeof settings.ignoreDirtyState === "boolean" ? settings.ignoreDirtyState : false,
-        customRepoTypes: settings.customRepoTypes || [],
-        customPackageTypes: settings.customPackageTypes || [],
+        customTypes: settings.customTypes || defaults.customTypes,
         items
     },
     getters: {
         repoTypes: (state) => {
-            return defaults.repoTypes.concat(state.customRepoTypes);
-        },
-        repoOptions: (state) => {
-            return defaults.repoTypes.concat(state.customRepoTypes).map((type) => {
-                return {
-                    value: type.iconKey,
-                    text: type.text
-                };
-            });
+            return defaults.repoTypes.concat(state.customTypes.repoTypes || []);
         },
         packageTypes: (state) => {
-            return defaults.packageTypes.concat(state.customPackageTypes);
+            return defaults.packageTypes.concat(state.customTypes.packageTypes || []);
         },
-        packageOptions: (state) => {
-            return defaults.packageTypes.concat(state.customPackageTypes).map((type) => {
-                return {
-                    value: type.iconKey,
-                    text: type.text
-                };
-            });
+        boardTypes: (state) => {
+            return defaults.boardTypes.concat(state.customTypes.boardTypes || []);
         },
     },
     mutations: {
@@ -70,7 +71,9 @@ export const appState = new Vuex.Store({
                 localPath: "new-project",
                 pathType: "relative",
                 packageUrl: "",
-                packageType: "npm",
+                packageType: "",
+                boardUrl: "",
+                boardType: "default",
                 demo: "",
                 description: "",
                 tags: [],
@@ -150,19 +153,23 @@ export const appState = new Vuex.Store({
                 devFolder: state.devFolder,
                 lastItemId: state.lastItemId,
                 ignoreDirtyState: state.ignoreDirtyState,
-                customRepoTypes: state.customRepoTypes,
-                customPackageTypes: state.customPackageTypes,
+                customTypes: state.customTypes,
             };
             setSettings(settings);
             saveSettings();
         },
         importData (state, data) {
             state.items = deepClone(data.items);
-            state.devFolder = data.settings.devFolder || "";
+            state.devFolder = data.settings.devFolder || defaults.devFolder;
             state.lastItemId = data.settings.lastItemId;
             state.ignoreDirtyState = !!data.settings.ignoreDirtyState;
-            state.customRepoTypes = data.settings.customRepoTypes || [];
-            state.customPackageTypes = data.settings.customPackageTypes || [];
+            state.customTypes = data.settings.customTypes || defaults.customTypes;
+            // Ensure new customTypes get added properly
+            Object.keys(defaults.customTypes).forEach((key) => {
+                if (!state.customTypes[key]) {
+                    state.customTypes[key] = [];
+                }
+            });
         },
         setDevFolder (state, devFolder) {
             state.devFolder = devFolder;
@@ -170,11 +177,14 @@ export const appState = new Vuex.Store({
         setIgnoreDirtyState (state, ignoreDirtyState) {
             state.ignoreDirtyState = ignoreDirtyState;
         },
-        setCustomRepoTypes (state, customRepoTypes) {
-            state.customRepoTypes = customRepoTypes;
-        },
-        setCustomPackageTypes (state, customPackageTypes) {
-            state.customPackageTypes = customPackageTypes;
+        setCustomTypes (state, customTypes) {
+            state.customTypes = customTypes;
+            // Ensure customTypes don't get deleted
+            Object.keys(defaults.customTypes).forEach((key) => {
+                if (!state.customTypes[key]) {
+                    state.customTypes[key] = [];
+                }
+            });
         },
     },
     actions: {
@@ -213,12 +223,8 @@ export const appState = new Vuex.Store({
             context.commit("setIgnoreDirtyState", ignoreDirtyState);
             context.commit("saveSettings");
         },
-        setCustomRepoTypes (context, customRepoTypes) {
-            context.commit("setCustomRepoTypes", customRepoTypes);
-            context.commit("saveSettings");
-        },
-        setCustomPackageTypes (context, customPackageTypes) {
-            context.commit("setCustomPackageTypes", customPackageTypes);
+        setCustomTypes (context, customTypes) {
+            context.commit("setCustomTypes", customTypes);
             context.commit("saveSettings");
         },
         importData (context, data) {

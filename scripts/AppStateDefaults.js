@@ -1,37 +1,83 @@
 export const defaults = {
     devFolder: "C:\\User\\Dev\\",
+    customTypes: {
+        repoTypes: [],
+        packageTypes: [],
+        boardTypes: [],
+    },
     repoTypes: [{
-        iconSrc: "SimpleIcons",
-        iconKey: "github",
-        text: "GitHub"
+        id: "",
+        text: "None",
     }, {
-        iconSrc: "SimpleIcons",
-        iconKey: "gitlab",
-        text: "GitLab"
+        id: "github",
+        text: "GitHub",
+        icon: {
+            src: "SimpleIcons",
+            key: "github",
+        }
     }, {
-        iconSrc: "SimpleIcons",
-        iconKey: "bitbucket",
-        text: "Bitbucket"
+        id: "gitlab",
+        text: "GitLab",
+        icon: {
+            src: "SimpleIcons",
+            key: "gitlab",
+        }
     }, {
-        iconSrc: "SimpleIcons",
-        iconKey: "git",
-        text: "git"
+        id: "bitbucket",
+        text: "Bitbucket",
+        icon: {
+            src: "SimpleIcons",
+            key: "bitbucket",
+        }
     }, {
-        iconSrc: "",
-        iconKey: "",
-        text: "None"
+        id: "git",
+        text: "git",
+        icon: {
+            src: "SimpleIcons",
+            key: "git",
+        }
     }],
     packageTypes: [{
-        iconSrc: "SimpleIcons",
-        iconKey: "npm",
-        text: "npm"
+        id: "",
+        text: "None",
     }, {
-        iconSrc: "SimpleIcons",
-        iconKey: "godotengine",
-        text: "Godot AL"
+        id: "npm",
+        text: "npm",
+        icon: {
+            src: "SimpleIcons",
+            key: "npm",
+        }
     }, {
-        iconSrc: "SimpleIcons",
-        iconKey: "nuget",
-        text: "NuGet"
+        id: "godotassetlibary",
+        text: "Godot AL",
+        icon: {
+            src: "SimpleIcons",
+            key: "godotengine",
+        }
+    }, {
+        id: "nuget",
+        text: "NuGet",
+        icon: {
+            src: "SimpleIcons",
+            key: "nuget",
+        }
+    }],
+    boardTypes: [{
+        id: "",
+        text: "None",
+    }, {
+        id: "trello",
+        text: "Trello",
+        icon: {
+            src: "SimpleIcons",
+            key: "trello",
+        }
+    }, {
+        id: "jira",
+        text: "Jira",
+        icon: {
+            src: "SimpleIcons",
+            key: "jira",
+        }
     }]
 };

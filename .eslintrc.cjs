@@ -16,11 +16,11 @@ module.exports = {
         "vue"
     ],
     "rules": {
-        "indent": ["error", 4],
         "linebreak-style": ["off"],
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
         "eol-last": ["error", "always"],
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
+        "indent": ["error", 4, { "SwitchCase": 1 }]
     }
 };

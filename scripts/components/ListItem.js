@@ -38,6 +38,14 @@ export const ListItem = Vue.component("list-item", {
                     <svg ref="package"></svg>
                 </b-link>
                 <b-link
+                    v-show="data.boardUrl"
+                    @click="stopPropagation"
+                    :href="data.boardUrl"
+                    target="_blank"
+                >
+                    <svg ref="board"></svg>
+                </b-link>
+                <b-link
                     v-show="data.demo"
                     @click="stopPropagation"
                     :href="data.demo"
@@ -60,14 +68,14 @@ export const ListItem = Vue.component("list-item", {
 
         replaceSvgWithSimpleIcons(this.$refs.vscode, "visualstudiocode", options);
 
-        this.updateIcons();
+        this.updateTypes();
 
         options.width = "1em",
         options.height = "1em",
         replaceSvgWithFeather(this.$refs.demo, "play-circle", options);
     },
     updated () {
-        this.updateIcons();
+        this.updateTypes();
     },
     computed: {
         ...mapState([
@@ -76,6 +84,7 @@ export const ListItem = Vue.component("list-item", {
         ...mapGetters([
             "repoTypes",
             "packageTypes",
+            "boardTypes",
         ]),
         modalId: {
             get () {
@@ -105,31 +114,39 @@ export const ListItem = Vue.component("list-item", {
             this.copyItem(this.data.id);
             this.$bvModal.show("editItemModal");
         },
-        updateIcons () {
+        updateTypes () {
             const options = {
                 width: "1.5em",
                 height: "1.5em",
             };
 
             [{
-                icons: this.repoTypes,
-                iconKey: this.data.repoType,
+                types: this.repoTypes,
+                typeId: this.data.repoType,
                 ref: "repo"
             }, {
-                icons: this.packageTypes,
-                iconKey: this.data.packageType,
+                types: this.packageTypes,
+                typeId: this.data.packageType,
                 ref: "package"
+            }, {
+                types: this.boardTypes,
+                typeId: this.data.boardType,
+                ref: "board"
             }].forEach((data) => {
-                const icon = data.icons.find((icon) => {
-                    return icon.iconKey === data.iconKey;
+                const type = data.types.find((types) => {
+                    return types.id === data.typeId;
                 });
+                const icon = type && type.icon || {};
 
-                if (icon && icon.iconSrc === "SimpleIcons") {
-                    this.$refs[data.ref] = replaceSvgWithSimpleIcons(this.$refs[data.ref], icon.iconKey, options);
-                } else if (icon && icon.iconSrc === "Feather") {
-                    this.$refs[data.ref] = replaceSvgWithFeather(this.$refs[data.ref], icon.iconKey, options);
-                } else {
-                    this.$refs[data.ref].style.display = "none";
+                switch (icon.src) {
+                    case "SimpleIcons":
+                        this.$refs[data.ref] = replaceSvgWithSimpleIcons(this.$refs[data.ref], icon.key, options);
+                        break;
+                    case "Feather":
+                        this.$refs[data.ref] = replaceSvgWithFeather(this.$refs[data.ref], icon.key, options);
+                        break;
+                    default:
+                        this.$refs[data.ref].style.display = "none";
                 }
             });
         },

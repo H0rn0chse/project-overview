@@ -9,27 +9,6 @@ export const EditItemGroup = Vue.component("edit-item-group", {
         <b-form-group
             id="fieldset-horizontal"
             label-cols="auto"
-            label="Repository URL"
-            label-for="input-repository"
-            class="w-100"
-        >
-            <b-input-group
-                id="input-repository"
-            >
-                <b-input-group-prepend>
-                    <b-form-select
-                        v-model="data.repoType"
-                        :options="repoOptions"
-                    />
-                </b-input-group-prepend>
-                <b-form-input
-                    v-model="data.repoUrl"
-                />
-            </b-input-group>
-        </b-form-group>
-        <b-form-group
-            id="fieldset-horizontal"
-            label-cols="auto"
             label="Local Path"
             label-for="input-localPath"
             class="w-100"
@@ -51,6 +30,27 @@ export const EditItemGroup = Vue.component("edit-item-group", {
         <b-form-group
             id="fieldset-horizontal"
             label-cols="auto"
+            label="Repository URL"
+            label-for="input-repository"
+            class="w-100"
+        >
+            <b-input-group
+                id="input-repository"
+            >
+                <b-input-group-prepend>
+                    <b-form-select
+                        v-model="data.repoType"
+                        :options="repoOptions"
+                    />
+                </b-input-group-prepend>
+                <b-form-input
+                    v-model="data.repoUrl"
+                />
+            </b-input-group>
+        </b-form-group>
+        <b-form-group
+            id="fieldset-horizontal"
+            label-cols="auto"
             label="Package URL"
             label-for="input-package"
             class="w-100"
@@ -66,6 +66,27 @@ export const EditItemGroup = Vue.component("edit-item-group", {
                 </b-input-group-prepend>
                 <b-form-input
                     v-model="data.packageUrl"
+                />
+            </b-input-group>
+        </b-form-group>
+        <b-form-group
+            id="fieldset-horizontal"
+            label-cols="auto"
+            label="Board URL"
+            label-for="input-board"
+            class="w-100"
+        >
+            <b-input-group
+                id="input-board"
+            >
+                <b-input-group-prepend>
+                    <b-form-select
+                        v-model="data.boardType"
+                        :options="boardOptions"
+                    />
+                </b-input-group-prepend>
+                <b-form-input
+                    v-model="data.boardUrl"
                 />
             </b-input-group>
         </b-form-group>
@@ -120,9 +141,25 @@ export const EditItemGroup = Vue.component("edit-item-group", {
             data: "itemCopy",
         }),
         ...mapGetters([
-            "repoOptions",
-            "packageOptions"
+            "repoTypes",
+            "packageTypes",
+            "boardTypes",
         ]),
+        repoOptions: {
+            get () {
+                return this.mapIcons(this.repoTypes);
+            }
+        },
+        packageOptions: {
+            get () {
+                return this.mapIcons(this.packageTypes);
+            }
+        },
+        boardOptions: {
+            get () {
+                return this.mapIcons(this.boardTypes);
+            }
+        },
     },
     data () {
         return {
@@ -135,5 +172,13 @@ export const EditItemGroup = Vue.component("edit-item-group", {
     methods: {
         ...mapActions([
         ]),
+        mapIcons (icons) {
+            return icons.map((icon) => {
+                return {
+                    value: icon.id,
+                    text: icon.text
+                };
+            });
+        }
     }
 });

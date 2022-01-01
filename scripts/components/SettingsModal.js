@@ -6,6 +6,7 @@ export const SettingsModal = Vue.component("settings-modal", {
         <b-modal
             id="settingsModal"
             class="settingsModal"
+            size="lg"
             @show="handleShow"
         >
             <template #modal-title>
@@ -38,28 +39,13 @@ export const SettingsModal = Vue.component("settings-modal", {
             <b-form-group
                 id="fieldset-horizontal"
                 label-cols="auto"
-                label="Custom Repo Type List"
-                label-for="textarea-customRepoTypes"
+                label="Custom Types"
+                label-for="textarea-customTypes"
                 class="w-100"
             >
                 <b-form-textarea
-                    id="textarea-customRepoTypes"
-                    v-model="customRepoTypesLocal"
-                    placeholder="Enter something..."
-                    rows="3"
-                    max-rows="7"
-                />
-            </b-form-group>
-            <b-form-group
-                id="fieldset-horizontal"
-                label-cols="auto"
-                label="Custom Package Type List"
-                label-for="textarea-customPackageTypes"
-                class="w-100"
-            >
-                <b-form-textarea
-                    id="textarea-customPackageTypes"
-                    v-model="customPackageTypesLocal"
+                    id="textarea-customTypes"
+                    v-model="customTypesLocal"
                     placeholder="Enter something..."
                     rows="3"
                     max-rows="7"
@@ -85,47 +71,36 @@ export const SettingsModal = Vue.component("settings-modal", {
         ...mapState([
             "devFolder",
             "ignoreDirtyState",
-            "customRepoTypes",
-            "customPackageTypes",
+            "customTypes"
         ]),
     },
     data () {
         return {
             devFolderLocal: "",
             ignoreDirtyStateLocal: false,
-            customRepoTypesLocal: "",
-            customPackageTypesLocal: "",
+            customTypesLocal: "",
         };
     },
     methods: {
         ...mapActions([
             "setDevFolder",
             "setIgnoreDirtyState",
-            "setCustomRepoTypes",
-            "setCustomPackageTypes",
+            "setCustomTypes",
         ]),
         handleShow () {
             this.ignoreDirtyStateLocal = this.ignoreDirtyState;
             this.devFolderLocal = this.devFolder;
-            this.customRepoTypesLocal = JSON.stringify(this.customRepoTypes, null, 4);
-            this.customPackageTypesLocal = JSON.stringify(this.customPackageTypes, null, 4);
+            this.customTypesLocal = JSON.stringify(this.customTypes, null, 2);
         },
         saveSettings (hide) {
             this.setDevFolder(this.devFolderLocal);
             this.setIgnoreDirtyState(this.ignoreDirtyStateLocal);
             try {
-                this.customRepoTypesLocal = this.customRepoTypesLocal === "" ? "[]" : this.customRepoTypesLocal;
-                const customRepoTypes = JSON.parse(this.customRepoTypesLocal);
-                this.setCustomRepoTypes(customRepoTypes);
+                this.customTypesLocal = this.customTypesLocal === "" ? "{}" : this.customTypesLocal;
+                const customTypes = JSON.parse(this.customTypesLocal);
+                this.setCustomTypes(customTypes);
             } catch (err) {
-                console.error(err, "customRepoTypes contained invalid JSON");
-            }
-            try {
-                this.customPackageTypesLocal = this.customPackageTypesLocal === "" ? "[]" : this.customPackageTypesLocal;
-                const customPackageTypes = JSON.parse(this.customPackageTypesLocal);
-                this.setCustomPackageTypes(customPackageTypes);
-            } catch (err) {
-                console.error(err, "customPackageTypes contained invalid JSON");
+                console.error(err, "customTypes contained invalid JSON");
             }
             hide();
         }
