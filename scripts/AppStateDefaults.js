@@ -9,6 +9,13 @@ export const defaults = {
         id: "",
         text: "None",
     }, {
+        id: "generic",
+        text: "Generic",
+        icon: {
+            src: "SimpleIcons",
+            key: "git",
+        }
+    }, {
         id: "github",
         text: "GitHub",
         icon: {
@@ -29,17 +36,17 @@ export const defaults = {
             src: "SimpleIcons",
             key: "bitbucket",
         }
-    }, {
-        id: "git",
-        text: "git",
-        icon: {
-            src: "SimpleIcons",
-            key: "git",
-        }
     }],
     packageTypes: [{
         id: "",
         text: "None",
+    }, {
+        id: "generic",
+        text: "Generic",
+        icon: {
+            src: "Feather",
+            key: "package",
+        }
     }, {
         id: "npm",
         text: "npm",
@@ -65,6 +72,13 @@ export const defaults = {
     boardTypes: [{
         id: "",
         text: "None",
+    }, {
+        id: "generic",
+        text: "Generic",
+        icon: {
+            src: "Feather",
+            key: "columns",
+        }
     }, {
         id: "trello",
         text: "Trello",

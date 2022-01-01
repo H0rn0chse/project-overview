@@ -26,6 +26,7 @@ export const ListItem = Vue.component("list-item", {
                     @click="stopPropagation"
                     :href="data.repoUrl"
                     target="_blank"
+                    title="Repository"
                 >
                     <svg ref="repo"></svg>
                 </b-link>
@@ -34,6 +35,7 @@ export const ListItem = Vue.component("list-item", {
                     @click="stopPropagation"
                     :href="data.packageUrl"
                     target="_blank"
+                    title="Package"
                 >
                     <svg ref="package"></svg>
                 </b-link>
@@ -42,6 +44,7 @@ export const ListItem = Vue.component("list-item", {
                     @click="stopPropagation"
                     :href="data.boardUrl"
                     target="_blank"
+                    title="Board"
                 >
                     <svg ref="board"></svg>
                 </b-link>
@@ -50,6 +53,7 @@ export const ListItem = Vue.component("list-item", {
                     @click="stopPropagation"
                     :href="data.demoUrl"
                     target="_blank"
+                    title="Demo"
                 >
                     <svg ref="demo"></svg>
                     Demo
@@ -59,6 +63,7 @@ export const ListItem = Vue.component("list-item", {
                     @click="stopPropagation"
                     :href="data.wikiUrl"
                     target="_blank"
+                    title="Wiki"
                 >
                     Wiki
                 </b-link>
