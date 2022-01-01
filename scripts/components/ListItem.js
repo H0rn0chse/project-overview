@@ -1,7 +1,7 @@
 import { replaceSvgWithFeather, replaceSvgWithSimpleIcons } from "../utils.js";
 
 const { Vue, Vuex } = globalThis;
-const { mapState, mapActions } = Vuex;
+const { mapState, mapActions, mapGetters } = Vuex;
 
 export const ListItem = Vue.component("list-item", {
     template: `
@@ -22,36 +22,12 @@ export const ListItem = Vue.component("list-item", {
                     <svg ref="vscode"></svg>
                 </b-link>
                 <b-link
-                    v-show="data.repoType === 'github'"
+                showif="data.repoUrl"
                     @click="stopPropagation"
                     :href="data.repoUrl"
                     target="_blank"
                 >
-                    <svg ref="github"></svg>
-                </b-link>
-                <b-link
-                    v-show="data.repoType === 'gitlab'"
-                    @click="stopPropagation"
-                    :href="data.repoUrl"
-                    target="_blank"
-                >
-                    <svg ref="gitlab"></svg>
-                </b-link>
-                <b-link
-                    v-show="data.repoType === 'bitbucket'"
-                    @click="stopPropagation"
-                    :href="data.repoUrl"
-                    target="_blank"
-                >
-                    <svg ref="bitbucket"></svg>
-                </b-link>
-                <b-link
-                    v-show="data.repoType === 'git'"
-                    @click="stopPropagation"
-                    :href="data.repoUrl"
-                    target="_blank"
-                >
-                    <svg ref="git"></svg>
+                    <svg ref="repo"></svg>
                 </b-link>
                 <b-link
                     v-show="data.npm"
@@ -83,19 +59,52 @@ export const ListItem = Vue.component("list-item", {
         };
 
         replaceSvgWithSimpleIcons(this.$refs.vscode, "visualstudiocode", options);
-        replaceSvgWithSimpleIcons(this.$refs.github, "github", options);
+        /*replaceSvgWithSimpleIcons(this.$refs.github, "github", options);
         replaceSvgWithSimpleIcons(this.$refs.gitlab, "gitlab", options);
         replaceSvgWithSimpleIcons(this.$refs.bitbucket, "bitbucket", options);
-        replaceSvgWithSimpleIcons(this.$refs.git, "git", options);
+        replaceSvgWithSimpleIcons(this.$refs.git, "git", options);*/
         replaceSvgWithSimpleIcons(this.$refs.npm, "npm", options);
+
+        const repoIcon = this.repoTypes.find((type) => {
+            return type.iconKey === this.data.repoType;
+        });
+
+        if (repoIcon && repoIcon.iconSrc === "SimpleIcons") {
+            this.$refs.repo = replaceSvgWithSimpleIcons(this.$refs.repo, repoIcon.iconKey, options);
+        } else if (repoIcon && repoIcon.iconSrc === "Feather") {
+            this.$refs.repo = replaceSvgWithFeather(this.$refs.repo, repoIcon.iconKey, options);
+        } else {
+            this.$refs.repo.style.display = "none";
+        }
 
         options.width = "1em",
         options.height = "1em",
         replaceSvgWithFeather(this.$refs.demo, "play-circle", options);
     },
+    updated () {
+        const options = {
+            width: "1.5em",
+            height: "1.5em",
+        };
+
+        const repoIcon = this.repoTypes.find((type) => {
+            return type.iconKey === this.data.repoType;
+        });
+
+        if (repoIcon && repoIcon.iconSrc === "SimpleIcons") {
+            this.$refs.repo = replaceSvgWithSimpleIcons(this.$refs.repo, repoIcon.iconKey, options);
+        } else if (repoIcon && repoIcon.iconSrc === "Feather") {
+            this.$refs.repo = replaceSvgWithFeather(this.$refs.repo, repoIcon.iconKey, options);
+        } else {
+            this.$refs.repo.style.display = "none";
+        }
+    },
     computed: {
         ...mapState([
-            "devFolder"
+            "devFolder",
+        ]),
+        ...mapGetters([
+            "repoTypes",
         ]),
         modalId: {
             get () {

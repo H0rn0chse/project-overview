@@ -1,5 +1,5 @@
 const { Vue, Vuex } = globalThis;
-const { mapState, mapActions } = Vuex;
+const { mapState, mapActions, mapGetters } = Vuex;
 
 export const EditItemGroup = Vue.component("edit-item-group", {
     template: `
@@ -108,12 +108,25 @@ export const EditItemGroup = Vue.component("edit-item-group", {
     props: [],
     computed: {
         ...mapState({
-            data: "itemCopy"
+            data: "itemCopy",
         }),
+        ...mapGetters([
+            "repoTypes",
+        ]),
+        repoOptions: {
+            get () {
+                return this.repoTypes.map((type) => {
+                    return {
+                        value: type.iconKey,
+                        text: type.text
+                    };
+                });
+            }
+        }
     },
     data () {
         return {
-            repoOptions: [
+            repoOptions2: [
                 { value: "github", text: "GitHub" },
                 { value: "gitlab", text: "GitLab" },
                 { value: "bitbucket", text: "Bitbucket" },

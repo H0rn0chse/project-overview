@@ -13,6 +13,7 @@ export function replaceSvgWithFeather (domRef, name, options = {}) {
     const svgNode = dummy.childNodes[0];
     dummy.innerHTML = "";
     domRef.replaceWith(svgNode);
+    return svgNode;
 }
 
 export function getColor (sKey) {
@@ -44,6 +45,7 @@ export function replaceSvgWithSimpleIcons (domRef, name, options = {}) {
     }
 
     domRef.replaceWith(svgNode);
+    return svgNode;
 }
 
 export function deepClone (value) {

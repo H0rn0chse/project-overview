@@ -1,6 +1,7 @@
 import { setDirtyState } from "./DirtyState.js";
 import { getItems, getSettings, setItems, setSettings, saveItems, saveSettings } from "./ItemManager.js";
 import { deepClone } from "./utils.js";
+import { defaults } from "./AppStateDefaults.js";
 
 const { Vuex } = globalThis;
 
@@ -12,18 +13,18 @@ export const appState = new Vuex.Store({
         searchTerms: [],
         itemCopy: items[0],
         filteredItems: items,
-        devFolder: settings.devFolder || "C:\\User\\Dev\\",
+        devFolder: settings.devFolder || defaults.devFolder,
         lastItemId: typeof settings.lastItemId === "number" ? settings.lastItemId : 0,
         ignoreDirtyState: typeof settings.ignoreDirtyState === "boolean" ? settings.ignoreDirtyState : false,
+        customRepoTypes: settings.customRepoTypes || [],
         items
     },
+    getters: {
+        repoTypes: (state) => {
+            return defaults.repoTypes.concat(state.customRepoTypes);
+        },
+    },
     mutations: {
-        setDevFolder (state, devFolder) {
-            state.devFolder = devFolder;
-        },
-        setIgnoreDirtyState (state, ignoreDirtyState) {
-            state.ignoreDirtyState = ignoreDirtyState;
-        },
         setSearchTerms (state, searchTerms) {
             state.searchTerms = searchTerms;
         },
@@ -115,15 +116,26 @@ export const appState = new Vuex.Store({
                 devFolder: state.devFolder,
                 lastItemId: state.lastItemId,
                 ignoreDirtyState: state.ignoreDirtyState,
+                customRepoTypes: state.customRepoTypes,
             };
             setSettings(settings);
             saveSettings();
         },
         importData (state, data) {
             state.items = deepClone(data.items);
-            state.devFolder = data.settings.devFolder;
+            state.devFolder = data.settings.devFolder || "";
             state.lastItemId = data.settings.lastItemId;
-            state.ignoreDirtyState = data.settings.ignoreDirtyState;
+            state.ignoreDirtyState = !!data.settings.ignoreDirtyState;
+            state.customRepoTypes = data.settings.customRepoTypes || [];
+        },
+        setDevFolder (state, devFolder) {
+            state.devFolder = devFolder;
+        },
+        setIgnoreDirtyState (state, ignoreDirtyState) {
+            state.ignoreDirtyState = ignoreDirtyState;
+        },
+        setCustomRepoTypes (state, customRepoTypes) {
+            state.customRepoTypes = customRepoTypes;
         },
     },
     actions: {
@@ -160,6 +172,10 @@ export const appState = new Vuex.Store({
         },
         setIgnoreDirtyState (context, ignoreDirtyState) {
             context.commit("setIgnoreDirtyState", ignoreDirtyState);
+            context.commit("saveSettings");
+        },
+        setCustomRepoTypes (context, customRepoTypes) {
+            context.commit("setCustomRepoTypes", customRepoTypes);
             context.commit("saveSettings");
         },
         importData (context, data) {
