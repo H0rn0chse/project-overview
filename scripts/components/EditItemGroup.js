@@ -51,14 +51,23 @@ export const EditItemGroup = Vue.component("edit-item-group", {
         <b-form-group
             id="fieldset-horizontal"
             label-cols="auto"
-            label="npm URL"
-            label-for="input-npm"
+            label="Package URL"
+            label-for="input-package"
             class="w-100"
         >
-            <b-form-input
-                id="input-npm"
-                v-model="data.npm"
-            />
+            <b-input-group
+                id="input-package"
+            >
+                <b-input-group-prepend>
+                    <b-form-select
+                        v-model="data.packageType"
+                        :options="packageOptions"
+                    />
+                </b-input-group-prepend>
+                <b-form-input
+                    v-model="data.packageUrl"
+                />
+            </b-input-group>
         </b-form-group>
         <b-form-group
             id="fieldset-horizontal"
@@ -111,27 +120,12 @@ export const EditItemGroup = Vue.component("edit-item-group", {
             data: "itemCopy",
         }),
         ...mapGetters([
-            "repoTypes",
+            "repoOptions",
+            "packageOptions"
         ]),
-        repoOptions: {
-            get () {
-                return this.repoTypes.map((type) => {
-                    return {
-                        value: type.iconKey,
-                        text: type.text
-                    };
-                });
-            }
-        }
     },
     data () {
         return {
-            repoOptions2: [
-                { value: "github", text: "GitHub" },
-                { value: "gitlab", text: "GitLab" },
-                { value: "bitbucket", text: "Bitbucket" },
-                { value: "git", text: "git" },
-            ],
             pathOptions: [
                 { value: "relative", text: "relative" },
                 { value: "absolute", text: "absolute" },

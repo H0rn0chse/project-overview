@@ -30,12 +30,12 @@ export const ListItem = Vue.component("list-item", {
                     <svg ref="repo"></svg>
                 </b-link>
                 <b-link
-                    v-show="data.npm"
+                    v-show="data.packageUrl"
                     @click="stopPropagation"
-                    :href="data.npm"
+                    :href="data.packageUrl"
                     target="_blank"
                 >
-                    <svg ref="npm"></svg>
+                    <svg ref="package"></svg>
                 </b-link>
                 <b-link
                     v-show="data.demo"
@@ -59,45 +59,15 @@ export const ListItem = Vue.component("list-item", {
         };
 
         replaceSvgWithSimpleIcons(this.$refs.vscode, "visualstudiocode", options);
-        /*replaceSvgWithSimpleIcons(this.$refs.github, "github", options);
-        replaceSvgWithSimpleIcons(this.$refs.gitlab, "gitlab", options);
-        replaceSvgWithSimpleIcons(this.$refs.bitbucket, "bitbucket", options);
-        replaceSvgWithSimpleIcons(this.$refs.git, "git", options);*/
-        replaceSvgWithSimpleIcons(this.$refs.npm, "npm", options);
 
-        const repoIcon = this.repoTypes.find((type) => {
-            return type.iconKey === this.data.repoType;
-        });
-
-        if (repoIcon && repoIcon.iconSrc === "SimpleIcons") {
-            this.$refs.repo = replaceSvgWithSimpleIcons(this.$refs.repo, repoIcon.iconKey, options);
-        } else if (repoIcon && repoIcon.iconSrc === "Feather") {
-            this.$refs.repo = replaceSvgWithFeather(this.$refs.repo, repoIcon.iconKey, options);
-        } else {
-            this.$refs.repo.style.display = "none";
-        }
+        this.updateIcons();
 
         options.width = "1em",
         options.height = "1em",
         replaceSvgWithFeather(this.$refs.demo, "play-circle", options);
     },
     updated () {
-        const options = {
-            width: "1.5em",
-            height: "1.5em",
-        };
-
-        const repoIcon = this.repoTypes.find((type) => {
-            return type.iconKey === this.data.repoType;
-        });
-
-        if (repoIcon && repoIcon.iconSrc === "SimpleIcons") {
-            this.$refs.repo = replaceSvgWithSimpleIcons(this.$refs.repo, repoIcon.iconKey, options);
-        } else if (repoIcon && repoIcon.iconSrc === "Feather") {
-            this.$refs.repo = replaceSvgWithFeather(this.$refs.repo, repoIcon.iconKey, options);
-        } else {
-            this.$refs.repo.style.display = "none";
-        }
+        this.updateIcons();
     },
     computed: {
         ...mapState([
@@ -105,6 +75,7 @@ export const ListItem = Vue.component("list-item", {
         ]),
         ...mapGetters([
             "repoTypes",
+            "packageTypes",
         ]),
         modalId: {
             get () {
@@ -133,6 +104,34 @@ export const ListItem = Vue.component("list-item", {
         showEditItemModal () {
             this.copyItem(this.data.id);
             this.$bvModal.show("editItemModal");
+        },
+        updateIcons () {
+            const options = {
+                width: "1.5em",
+                height: "1.5em",
+            };
+
+            [{
+                icons: this.repoTypes,
+                iconKey: this.data.repoType,
+                ref: "repo"
+            }, {
+                icons: this.packageTypes,
+                iconKey: this.data.packageType,
+                ref: "package"
+            }].forEach((data) => {
+                const icon = data.icons.find((icon) => {
+                    return icon.iconKey === data.iconKey;
+                });
+
+                if (icon && icon.iconSrc === "SimpleIcons") {
+                    this.$refs[data.ref] = replaceSvgWithSimpleIcons(this.$refs[data.ref], icon.iconKey, options);
+                } else if (icon && icon.iconSrc === "Feather") {
+                    this.$refs[data.ref] = replaceSvgWithFeather(this.$refs[data.ref], icon.iconKey, options);
+                } else {
+                    this.$refs[data.ref].style.display = "none";
+                }
+            });
         },
     }
 });

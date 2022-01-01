@@ -8,6 +8,19 @@ const { Vuex } = globalThis;
 const items = getItems();
 const settings = getSettings();
 
+/*========================== CONVERSION ==========================*/
+items.forEach((item) => {
+    if (item.npm) {
+        item.packageUrl = item.npm;
+        item.packageType = "npm";
+        delete item.npm;
+    } else if (item.hasOwnProperty("npm")) {
+        item.packageType = "npm";
+        delete item.npm;
+    }
+});
+/*================================================================*/
+
 export const appState = new Vuex.Store({
     state: {
         searchTerms: [],
@@ -17,11 +30,31 @@ export const appState = new Vuex.Store({
         lastItemId: typeof settings.lastItemId === "number" ? settings.lastItemId : 0,
         ignoreDirtyState: typeof settings.ignoreDirtyState === "boolean" ? settings.ignoreDirtyState : false,
         customRepoTypes: settings.customRepoTypes || [],
+        customPackageTypes: settings.customPackageTypes || [],
         items
     },
     getters: {
         repoTypes: (state) => {
             return defaults.repoTypes.concat(state.customRepoTypes);
+        },
+        repoOptions: (state) => {
+            return defaults.repoTypes.concat(state.customRepoTypes).map((type) => {
+                return {
+                    value: type.iconKey,
+                    text: type.text
+                };
+            });
+        },
+        packageTypes: (state) => {
+            return defaults.packageTypes.concat(state.customPackageTypes);
+        },
+        packageOptions: (state) => {
+            return defaults.packageTypes.concat(state.customPackageTypes).map((type) => {
+                return {
+                    value: type.iconKey,
+                    text: type.text
+                };
+            });
         },
     },
     mutations: {
@@ -36,7 +69,8 @@ export const appState = new Vuex.Store({
                 repoType: "github",
                 localPath: "new-project",
                 pathType: "relative",
-                npm: "",
+                packageUrl: "",
+                packageType: "npm",
                 demo: "",
                 description: "",
                 tags: [],
@@ -117,6 +151,7 @@ export const appState = new Vuex.Store({
                 lastItemId: state.lastItemId,
                 ignoreDirtyState: state.ignoreDirtyState,
                 customRepoTypes: state.customRepoTypes,
+                customPackageTypes: state.customPackageTypes,
             };
             setSettings(settings);
             saveSettings();
@@ -127,6 +162,7 @@ export const appState = new Vuex.Store({
             state.lastItemId = data.settings.lastItemId;
             state.ignoreDirtyState = !!data.settings.ignoreDirtyState;
             state.customRepoTypes = data.settings.customRepoTypes || [];
+            state.customPackageTypes = data.settings.customPackageTypes || [];
         },
         setDevFolder (state, devFolder) {
             state.devFolder = devFolder;
@@ -136,6 +172,9 @@ export const appState = new Vuex.Store({
         },
         setCustomRepoTypes (state, customRepoTypes) {
             state.customRepoTypes = customRepoTypes;
+        },
+        setCustomPackageTypes (state, customPackageTypes) {
+            state.customPackageTypes = customPackageTypes;
         },
     },
     actions: {
@@ -176,6 +215,10 @@ export const appState = new Vuex.Store({
         },
         setCustomRepoTypes (context, customRepoTypes) {
             context.commit("setCustomRepoTypes", customRepoTypes);
+            context.commit("saveSettings");
+        },
+        setCustomPackageTypes (context, customPackageTypes) {
+            context.commit("setCustomPackageTypes", customPackageTypes);
             context.commit("saveSettings");
         },
         importData (context, data) {

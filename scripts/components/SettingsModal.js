@@ -50,6 +50,21 @@ export const SettingsModal = Vue.component("settings-modal", {
                     max-rows="7"
                 />
             </b-form-group>
+            <b-form-group
+                id="fieldset-horizontal"
+                label-cols="auto"
+                label="Custom Package Type List"
+                label-for="textarea-customPackageTypes"
+                class="w-100"
+            >
+                <b-form-textarea
+                    id="textarea-customPackageTypes"
+                    v-model="customPackageTypesLocal"
+                    placeholder="Enter something..."
+                    rows="3"
+                    max-rows="7"
+                />
+            </b-form-group>
             <template #modal-footer="{ hide, cancel }">
                 <b-button
                     @click="saveSettings(hide)"
@@ -70,7 +85,8 @@ export const SettingsModal = Vue.component("settings-modal", {
         ...mapState([
             "devFolder",
             "ignoreDirtyState",
-            "customRepoTypes"
+            "customRepoTypes",
+            "customPackageTypes",
         ]),
     },
     data () {
@@ -78,6 +94,7 @@ export const SettingsModal = Vue.component("settings-modal", {
             devFolderLocal: "",
             ignoreDirtyStateLocal: false,
             customRepoTypesLocal: "",
+            customPackageTypesLocal: "",
         };
     },
     methods: {
@@ -85,11 +102,13 @@ export const SettingsModal = Vue.component("settings-modal", {
             "setDevFolder",
             "setIgnoreDirtyState",
             "setCustomRepoTypes",
+            "setCustomPackageTypes",
         ]),
         handleShow () {
             this.ignoreDirtyStateLocal = this.ignoreDirtyState;
             this.devFolderLocal = this.devFolder;
             this.customRepoTypesLocal = JSON.stringify(this.customRepoTypes, null, 4);
+            this.customPackageTypesLocal = JSON.stringify(this.customPackageTypes, null, 4);
         },
         saveSettings (hide) {
             this.setDevFolder(this.devFolderLocal);
@@ -100,6 +119,13 @@ export const SettingsModal = Vue.component("settings-modal", {
                 this.setCustomRepoTypes(customRepoTypes);
             } catch (err) {
                 console.error(err, "customRepoTypes contained invalid JSON");
+            }
+            try {
+                this.customPackageTypesLocal = this.customPackageTypesLocal === "" ? "[]" : this.customPackageTypesLocal;
+                const customPackageTypes = JSON.parse(this.customPackageTypesLocal);
+                this.setCustomPackageTypes(customPackageTypes);
+            } catch (err) {
+                console.error(err, "customPackageTypes contained invalid JSON");
             }
             hide();
         }

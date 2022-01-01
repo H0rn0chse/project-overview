@@ -20,5 +20,18 @@ export const defaults = {
         iconSrc: "",
         iconKey: "",
         text: "None"
+    }],
+    packageTypes: [{
+        iconSrc: "SimpleIcons",
+        iconKey: "npm",
+        text: "npm"
+    }, {
+        iconSrc: "SimpleIcons",
+        iconKey: "godotengine",
+        text: "Godot AL"
+    }, {
+        iconSrc: "SimpleIcons",
+        iconKey: "nuget",
+        text: "NuGet"
     }]
 };
