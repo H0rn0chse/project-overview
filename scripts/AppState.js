@@ -32,6 +32,17 @@ items.forEach((item) => {
         item.boardType = "";
         item.boardUrl = "";
     }
+
+    // eslint-disable-next-line no-prototype-builtins
+    if (!item.hasOwnProperty("wikiUrl")) {
+        item.wikiUrl = "";
+    }
+
+    // eslint-disable-next-line no-prototype-builtins
+    if (item.hasOwnProperty("demo")) {
+        item.demoUrl = item.demo;
+        delete item.demo;
+    }
 });
 
 /*================================================================*/
@@ -74,7 +85,8 @@ export const appState = new Vuex.Store({
                 packageType: "",
                 boardUrl: "",
                 boardType: "default",
-                demo: "",
+                demoUrl: "",
+                wikiUrl: "",
                 description: "",
                 tags: [],
             };

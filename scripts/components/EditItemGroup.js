@@ -99,7 +99,19 @@ export const EditItemGroup = Vue.component("edit-item-group", {
         >
             <b-form-input
                 id="input-demo"
-                v-model="data.demo"
+                v-model="data.demoUrl"
+            />
+        </b-form-group>
+        <b-form-group
+            id="fieldset-horizontal"
+            label-cols="auto"
+            label="Wiki URL"
+            label-for="input-wiki"
+            class="w-100"
+        >
+            <b-form-input
+                id="input-wiki"
+                v-model="data.wikiUrl"
             />
         </b-form-group>
         <b-form-group

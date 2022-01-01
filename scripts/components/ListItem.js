@@ -46,13 +46,21 @@ export const ListItem = Vue.component("list-item", {
                     <svg ref="board"></svg>
                 </b-link>
                 <b-link
-                    v-show="data.demo"
+                    v-show="data.demoUrl"
                     @click="stopPropagation"
-                    :href="data.demo"
+                    :href="data.demoUrl"
                     target="_blank"
                 >
                     <svg ref="demo"></svg>
                     Demo
+                </b-link>
+                <b-link
+                    v-show="data.wikiUrl"
+                    @click="stopPropagation"
+                    :href="data.wikiUrl"
+                    target="_blank"
+                >
+                    Wiki
                 </b-link>
             </div>
         </div>
