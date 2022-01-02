@@ -111,7 +111,7 @@ export const appState = new Vuex.Store({
                 packageUrl: "",
                 packageType: "",
                 boardUrl: "",
-                boardType: "default",
+                boardType: "",
                 demoUrl: "",
                 wikiUrl: "",
                 description: "",
