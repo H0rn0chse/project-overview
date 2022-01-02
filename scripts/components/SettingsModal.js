@@ -130,11 +130,14 @@ export const SettingsModal = Vue.component("settings-modal", {
         onTypesUpdate (evt) {
             this.enableSave = !evt.error;
         },
+        updateLocalCustomTypes () {
+            this.customTypesLocal = deepClone(this.customTypes);
+            this.$refs?.customTypes?.reset();
+        },
         handleShow () {
             this.ignoreDirtyStateLocal = this.ignoreDirtyState;
             this.devFolderLocal = this.devFolder;
-            this.customTypesLocal = deepClone(this.customTypes);
-            this.$refs?.customTypes?.reset();
+            this.updateLocalCustomTypes();
         },
         autoFormat () {
             this.$refs.customTypes.autoFormat();
@@ -148,6 +151,7 @@ export const SettingsModal = Vue.component("settings-modal", {
 
             const customTypes = this.$refs.customTypes.getObject();
             this.setCustomTypes(customTypes);
+            this.updateLocalCustomTypes();
             hide();
         },
         handleHide (evt) {
