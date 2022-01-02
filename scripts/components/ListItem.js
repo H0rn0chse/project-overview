@@ -90,8 +90,6 @@ export const ListItem = Vue.component("list-item", {
             height: "1.5em",
         };
 
-        replaceSvgWithSimpleIcons(this.$refs.vscode, "visualstudiocode", options);
-
         this.updateFavoriteIcon();
         this.updateTypes();
 

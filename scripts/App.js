@@ -9,7 +9,7 @@ import { EditItemModal } from "./components/EditItemModal.js";
 import { AddItemModal } from "./components/AddItemModal.js";
 import { JsonEditor } from "./components/JsonEditor.js";
 
-const { Vue, Vuex, vueScrollbar } = globalThis;
+const { Vue, Vuex, vueScrollbar, VueMarkdown } = globalThis;
 const { mapState, mapActions } = Vuex;
 
 const componentList = [
@@ -25,6 +25,7 @@ const componentList = [
 ];
 
 Vue.component("vue-custom-scrollbar", vueScrollbar);
+Vue.use(VueMarkdown);
 
 const app = new Vue({
     el: "#app",

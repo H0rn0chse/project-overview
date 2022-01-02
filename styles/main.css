@@ -6,6 +6,7 @@
 @import "ItemList.css";
 @import "ListItem.css";
 @import "SettingsModal.css";
+@import "EditItemGroup.css";
 
 body {
     margin: 0;

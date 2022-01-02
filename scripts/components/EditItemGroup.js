@@ -123,15 +123,42 @@ export const EditItemGroup = Vue.component("edit-item-group", {
             label-cols="auto"
             label="Description"
             label-for="textarea-description"
-            class="w-100"
+            class="w-100 flex-nowrap"
         >
-            <b-form-textarea
+            <div
                 id="textarea-description"
-                v-model="data.description"
-                placeholder="Enter something..."
-                rows="3"
-                max-rows="7"
-            />
+            >
+                <b-button-group
+                    class="toggleGroup"
+                >
+                    <b-button
+                        size="sm"
+                        variant="primary"
+                        :pressed.sync="editPressed"
+                    >
+                        Edit
+                    </b-button>
+                    <b-button
+                        size="sm"
+                        variant="primary"
+                        :pressed.sync="previewPressed"
+                    >
+                        Preview
+                    </b-button>
+                </b-button-group>
+                <vue-markdown
+                    v-if="previewPressed"
+                    :source="data.description"
+                    class="itemDescription"
+                />
+                <b-form-textarea
+                    v-if="editPressed"
+                    v-model="data.description"
+                    placeholder="Enter something..."
+                    rows="3"
+                    max-rows="7"
+                />
+            </div>
         </b-form-group>
         <b-form-group
             id="fieldset-horizontal"
@@ -155,6 +182,7 @@ export const EditItemGroup = Vue.component("edit-item-group", {
     computed: {
         ...mapState({
             data: "itemCopy",
+            previewMarkdown: "previewMarkdown"
         }),
         ...mapGetters([
             "protocols",
@@ -182,6 +210,26 @@ export const EditItemGroup = Vue.component("edit-item-group", {
                 return this.mapIcons(this.boardTypes);
             }
         },
+        previewPressed: {
+            get () {
+                return this.previewMarkdown;
+            },
+            set (newValue) {
+                if (newValue) {
+                    this.setPreviewMarkdown(newValue);
+                }
+            }
+        },
+        editPressed: {
+            get () {
+                return !this.previewMarkdown;
+            },
+            set (newValue) {
+                if (newValue) {
+                    this.setPreviewMarkdown(!newValue);
+                }
+            }
+        },
     },
     data () {
         return {
@@ -193,6 +241,7 @@ export const EditItemGroup = Vue.component("edit-item-group", {
     },
     methods: {
         ...mapActions([
+            "setPreviewMarkdown"
         ]),
         mapIcons (icons) {
             return icons.map((icon) => {

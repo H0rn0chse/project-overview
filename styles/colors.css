@@ -1,6 +1,8 @@
 :root {
     --common-font-primary: #dcddde;
     --common-font-secondary: #A0A3A7;
+    --common-font-dark: #62666A;
+    --common-input-border: #ced4da;
     --common-primary: #0074d9;
     --common-primary-light: #2f8ada;
     --common-delete: #ff0000;

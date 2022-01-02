@@ -70,6 +70,7 @@ export const appState = new Vuex.Store({
         lastItemId: typeof settings.lastItemId === "number" ? settings.lastItemId : 0,
         ignoreDirtyState: typeof settings.ignoreDirtyState === "boolean" ? settings.ignoreDirtyState : false,
         customTypes: settings.customTypes || defaults.customTypes,
+        previewMarkdown: true,
         items
     },
     getters: {
@@ -231,6 +232,9 @@ export const appState = new Vuex.Store({
                 }
             });
         },
+        setPreviewMarkdown (state, value) {
+            state.previewMarkdown = value;
+        },
     },
     actions: {
         setSearchTerms (context, searchTerms) {
@@ -283,6 +287,9 @@ export const appState = new Vuex.Store({
             context.commit("saveSettings");
             setDirtyState(false);
             context.commit("applySearch");
+        },
+        setPreviewMarkdown (context, value) {
+            context.commit("setPreviewMarkdown", value);
         },
     },
 });
