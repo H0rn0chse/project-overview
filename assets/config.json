@@ -1,0 +1,43 @@
+{
+    "protocols": [
+        {
+            "id": "custom",
+            "text": "custom Protocol",
+            "schema": "custom://url?path={{PATH}}",
+            "icon": {
+                "src": "SimpleIcons",
+                "key": "androidstudio"
+            }
+        }
+    ],
+    "repoTypes": [
+        {
+            "id": "custom",
+            "text": "custom Repo",
+            "icon": {
+                "src": "Feather",
+                "key": "cloud"
+            }
+        }
+    ],
+    "packageTypes": [
+        {
+            "id": "custom",
+            "text": "custom Package",
+            "icon": {
+                "src": "SimpleIcons",
+                "key": "d3dotjs"
+            }
+        }
+    ],
+    "boardTypes": [
+        {
+            "id": "custom",
+            "text": "custom Repo",
+            "icon": {
+                "src": "SimpleIcons",
+                "key": "Flipboard"
+            }
+        }
+    ]
+}
