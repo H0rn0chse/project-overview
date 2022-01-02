@@ -1,4 +1,4 @@
-import { replaceSvgWithFeather, replaceSvgWithSimpleIcons } from "../utils.js";
+import { getColor, replaceSvgWithFeather, replaceSvgWithSimpleIcons } from "../utils.js";
 
 const { Vue, Vuex } = globalThis;
 const { mapState, mapActions, mapGetters } = Vuex;
@@ -6,67 +6,78 @@ const { mapState, mapActions, mapGetters } = Vuex;
 export const ListItem = Vue.component("list-item", {
     template: `
         <div
-            class="listItem"
+            class="listItem d-flex flex-row justify-content-between align-items-center"
             @click="showEditItemModal"
         >
-            <h3>{{data.title}}</h3>
             <div
-                class="linkList"
+                class="d-flex flex-column"
             >
-                <b-link
-                    showif="data.localPath"
-                    @click="stopPropagation"
-                    :href="vscodePath"
-                    target="_blank"
+                <h3>{{data.title}}</h3>
+                <div
+                    class="linkList"
                 >
-                    <svg ref="vscode"></svg>
-                </b-link>
-                <b-link
-                showif="data.repoUrl"
-                    @click="stopPropagation"
-                    :href="data.repoUrl"
-                    target="_blank"
-                    title="Repository"
-                >
-                    <svg ref="repo"></svg>
-                </b-link>
-                <b-link
-                    v-show="data.packageUrl"
-                    @click="stopPropagation"
-                    :href="data.packageUrl"
-                    target="_blank"
-                    title="Package"
-                >
-                    <svg ref="package"></svg>
-                </b-link>
-                <b-link
-                    v-show="data.boardUrl"
-                    @click="stopPropagation"
-                    :href="data.boardUrl"
-                    target="_blank"
-                    title="Board"
-                >
-                    <svg ref="board"></svg>
-                </b-link>
-                <b-link
-                    v-show="data.demoUrl"
-                    @click="stopPropagation"
-                    :href="data.demoUrl"
-                    target="_blank"
-                    title="Demo"
-                >
-                    <svg ref="demo"></svg>
-                    Demo
-                </b-link>
-                <b-link
-                    v-show="data.wikiUrl"
-                    @click="stopPropagation"
-                    :href="data.wikiUrl"
-                    target="_blank"
-                    title="Wiki"
-                >
-                    Wiki
-                </b-link>
+                    <b-link
+                        showif="data.localPath"
+                        @click="stopPropagation"
+                        :href="vscodePath"
+                        target="_blank"
+                    >
+                        <svg ref="vscode"></svg>
+                    </b-link>
+                    <b-link
+                    showif="data.repoUrl"
+                        @click="stopPropagation"
+                        :href="data.repoUrl"
+                        target="_blank"
+                        title="Repository"
+                    >
+                        <svg ref="repo"></svg>
+                    </b-link>
+                    <b-link
+                        v-show="data.packageUrl"
+                        @click="stopPropagation"
+                        :href="data.packageUrl"
+                        target="_blank"
+                        title="Package"
+                    >
+                        <svg ref="package"></svg>
+                    </b-link>
+                    <b-link
+                        v-show="data.boardUrl"
+                        @click="stopPropagation"
+                        :href="data.boardUrl"
+                        target="_blank"
+                        title="Board"
+                    >
+                        <svg ref="board"></svg>
+                    </b-link>
+                    <b-link
+                        v-show="data.demoUrl"
+                        @click="stopPropagation"
+                        :href="data.demoUrl"
+                        target="_blank"
+                        title="Demo"
+                    >
+                        <svg ref="demo"></svg>
+                        Demo
+                    </b-link>
+                    <b-link
+                        v-show="data.wikiUrl"
+                        @click="stopPropagation"
+                        :href="data.wikiUrl"
+                        target="_blank"
+                        title="Wiki"
+                    >
+                        Wiki
+                    </b-link>
+                </div>
+            </div>
+            <div
+                class="favorite"
+                title="Mark as Favorite"
+                @click="handleFavoriteClick"
+            >
+                <svg ref="favorite"></svg>
             </div>
         </div>
     `,
@@ -81,6 +92,7 @@ export const ListItem = Vue.component("list-item", {
 
         replaceSvgWithSimpleIcons(this.$refs.vscode, "visualstudiocode", options);
 
+        this.updateFavoriteIcon();
         this.updateTypes();
 
         options.width = "1em",
@@ -88,6 +100,7 @@ export const ListItem = Vue.component("list-item", {
         replaceSvgWithFeather(this.$refs.demo, "play-circle", options);
     },
     updated () {
+        this.updateFavoriteIcon();
         this.updateTypes();
     },
     computed: {
@@ -118,7 +131,8 @@ export const ListItem = Vue.component("list-item", {
     },
     methods: {
         ...mapActions([
-            "copyItem"
+            "copyItem",
+            "setFavorite"
         ]),
         stopPropagation (evt) {
             evt.stopPropagation();
@@ -126,6 +140,27 @@ export const ListItem = Vue.component("list-item", {
         showEditItemModal () {
             this.copyItem(this.data.id);
             this.$bvModal.show("editItemModal");
+        },
+        handleFavoriteClick (evt) {
+            const options = {
+                itemId: this.data.id,
+                value: !this.data.isFavorite,
+            };
+            this.setFavorite(options);
+            this.stopPropagation(evt);
+        },
+        updateFavoriteIcon () {
+            const options = {
+                width: "1.5em",
+                height: "1.5em",
+            };
+
+            if (this.data.isFavorite) {
+                options.stroke = getColor("--common-favorite");
+                options.fill = getColor("--common-favorite");
+            }
+
+            this.$refs.favorite = replaceSvgWithFeather(this.$refs.favorite, "star", options);
         },
         updateTypes () {
             const options = {

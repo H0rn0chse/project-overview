@@ -16,7 +16,7 @@ items.forEach((item) => {
         delete item.npm;
     // eslint-disable-next-line no-prototype-builtins
     } else if (item.hasOwnProperty("npm")) {
-        item.packageType = "npm";
+        item.packageType = "";
         item.packageUrl = "";
         delete item.npm;
     }
@@ -25,6 +25,10 @@ items.forEach((item) => {
     if (!item.hasOwnProperty("packageType")) {
         item.packageType = "";
         item.packageUrl = "";
+    }
+
+    if (item.packageType === "npm" && item.packageUrl === "") {
+        item.packageType = "";
     }
 
     // eslint-disable-next-line no-prototype-builtins
@@ -42,6 +46,11 @@ items.forEach((item) => {
     if (item.hasOwnProperty("demo")) {
         item.demoUrl = item.demo;
         delete item.demo;
+    }
+
+    // eslint-disable-next-line no-prototype-builtins
+    if (!item.hasOwnProperty("isFavorite")) {
+        item.isFavorite = false;
     }
 });
 
@@ -73,6 +82,14 @@ export const appState = new Vuex.Store({
         setSearchTerms (state, searchTerms) {
             state.searchTerms = searchTerms;
         },
+        setFavorite (state, options) {
+            const itemIndex = state.items.findIndex((item) => {
+                return item.id === options.itemId;
+            });
+            if (itemIndex > -1) {
+                state.items[itemIndex].isFavorite = !!options.value;
+            }
+        },
         createDefaultItemCopy (state) {
             const newItem = {
                 id: state.lastItemId + 1,
@@ -89,6 +106,7 @@ export const appState = new Vuex.Store({
                 wikiUrl: "",
                 description: "",
                 tags: [],
+                isFavorite: false,
             };
             state.itemCopy = newItem;
         },
@@ -204,6 +222,11 @@ export const appState = new Vuex.Store({
             context.commit("setSearchTerms", searchTerms);
             context.commit("applySearch");
         },
+        setFavorite (context, options) {
+            context.commit("setFavorite", options);
+            context.commit("saveItems");
+            context.commit("applySearch");
+        },
         createDefaultItemCopy (context) {
             context.commit("createDefaultItemCopy");
         },
@@ -245,7 +268,7 @@ export const appState = new Vuex.Store({
             context.commit("saveSettings");
             setDirtyState(false);
             context.commit("applySearch");
-        }
+        },
     },
 });
 

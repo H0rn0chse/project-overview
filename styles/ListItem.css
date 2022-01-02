@@ -21,3 +21,7 @@
     margin-left: 0.1em;
     margin-right: 0.1em;
 }
+
+.listItem .favorite {
+    margin-right: 2em;
+}
