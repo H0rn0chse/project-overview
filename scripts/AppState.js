@@ -170,6 +170,12 @@ export const appState = new Vuex.Store({
                     return matchesAllTerms;
                 })
                 .sort((itemA, itemB) => {
+                    if (itemA.isFavorite && !itemB.isFavorite) {
+                        return -1;
+                    }
+                    if (!itemA.isFavorite && itemB.isFavorite) {
+                        return 1;
+                    }
                     return itemA.title.localeCompare(itemB.title);
                 });
         },
