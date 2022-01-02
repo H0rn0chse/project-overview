@@ -1,9 +1,11 @@
 @import "colors.css";
 @import "App.css";
+@import "JsonEditor.css";
 @import "SideBar.css";
 @import "SearchBar.css";
 @import "ItemList.css";
 @import "ListItem.css";
+@import "SettingsModal.css";
 
 body {
     margin: 0;

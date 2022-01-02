@@ -19,10 +19,10 @@ export const ListItem = Vue.component("list-item", {
                     <b-link
                         showif="data.localPath"
                         @click="stopPropagation"
-                        :href="vscodePath"
+                        :href="localPath"
                         target="_blank"
                     >
-                        <svg ref="vscode"></svg>
+                        <svg ref="ide"></svg>
                     </b-link>
                     <b-link
                     showif="data.repoUrl"
@@ -108,6 +108,7 @@ export const ListItem = Vue.component("list-item", {
             "devFolder",
         ]),
         ...mapGetters([
+            "protocols",
             "repoTypes",
             "packageTypes",
             "boardTypes",
@@ -117,14 +118,23 @@ export const ListItem = Vue.component("list-item", {
                 return `${this.data.id}_detailModal`;
             }
         },
-        vscodePath: {
+        localPath: {
             get () {
+                let path = this.data.localPath;
                 if (this.data.pathType === "relative") {
-                    return `vscode://file/${this.devFolder}${this.data.localPath}`;
+                    path = `${this.devFolder}${this.data.localPath}`;
                 }
-                return `vscode://file/${this.data.localPath}`;
+
+                const protocol = this.protocols.find((protocol) => {
+                    return protocol.id === this.data.localProtocol;
+                });
+                if (!protocol) {
+                    return `file://${path}`;
+                }
+
+                return protocol.schema.replaceAll("{{PATH}}", path);
             }
-        }
+        },
     },
     data () {
         return {};
@@ -169,6 +179,10 @@ export const ListItem = Vue.component("list-item", {
             };
 
             [{
+                types: this.protocols,
+                typeId: this.data.localProtocol,
+                ref: "ide"
+            }, {
                 types: this.repoTypes,
                 typeId: this.data.repoType,
                 ref: "repo"

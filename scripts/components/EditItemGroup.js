@@ -18,6 +18,10 @@ export const EditItemGroup = Vue.component("edit-item-group", {
             >
                 <b-input-group-prepend>
                     <b-form-select
+                        v-model="data.localProtocol"
+                        :options="protocolOptions"
+                    />
+                    <b-form-select
                         v-model="data.pathType"
                         :options="pathOptions"
                     />
@@ -153,10 +157,16 @@ export const EditItemGroup = Vue.component("edit-item-group", {
             data: "itemCopy",
         }),
         ...mapGetters([
+            "protocols",
             "repoTypes",
             "packageTypes",
             "boardTypes",
         ]),
+        protocolOptions: {
+            get () {
+                return this.mapIcons(this.protocols);
+            }
+        },
         repoOptions: {
             get () {
                 return this.mapIcons(this.repoTypes);

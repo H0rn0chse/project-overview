@@ -7,6 +7,7 @@ import { SettingsModal } from "./components/SettingsModal.js";
 import { EditItemGroup } from "./components/EditItemGroup.js";
 import { EditItemModal } from "./components/EditItemModal.js";
 import { AddItemModal } from "./components/AddItemModal.js";
+import { JsonEditor } from "./components/JsonEditor.js";
 
 const { Vue, Vuex, vueScrollbar } = globalThis;
 const { mapState, mapActions } = Vuex;
@@ -20,6 +21,7 @@ const componentList = [
     EditItemModal,
     AddItemModal,
     SettingsModal,
+    JsonEditor,
 ];
 
 Vue.component("vue-custom-scrollbar", vueScrollbar);

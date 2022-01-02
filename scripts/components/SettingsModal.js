@@ -1,3 +1,5 @@
+import { deepClone } from "../utils.js";
+
 const { Vue, Vuex } = globalThis;
 const { mapState, mapActions } = Vuex;
 
@@ -5,9 +7,11 @@ export const SettingsModal = Vue.component("settings-modal", {
     template: `
         <b-modal
             id="settingsModal"
+            ref="modal"
             class="settingsModal"
             size="lg"
             @show="handleShow"
+            @hide="handleHide"
         >
             <template #modal-title>
                 Settings
@@ -43,18 +47,41 @@ export const SettingsModal = Vue.component("settings-modal", {
                 label-for="textarea-customTypes"
                 class="w-100"
             >
-                <b-form-textarea
+                <json-editor
                     id="textarea-customTypes"
-                    v-model="customTypesLocal"
-                    placeholder="Enter something..."
-                    rows="3"
-                    max-rows="7"
+                    ref="customTypes"
+                    :data="customTypesLocal"
+                    @update="onTypesUpdate"
                 />
+            </b-form-group>
+            <b-form-group
+                id="fieldset-horizontal"
+                label-cols="auto"
+                label="Custom Types"
+                label-for="btn-autoFormat"
+                class="w-100 invisbibleLabel"
+            >
+                <div
+                    id="btn-autoFormat"
+                >
+                    <b-button
+                        @click="reset"
+                    >
+                        Reset
+                    </b-button>
+                    <b-button
+                        @click="autoFormat"
+                        :disabled="!enableSave"
+                    >
+                        AutoFormat
+                    </b-button>
+                </div>
             </b-form-group>
             <template #modal-footer="{ hide, cancel }">
                 <b-button
                     @click="saveSettings(hide)"
                     variant="success"
+                    :disabled="!enableSave"
                 >
                     Save
                 </b-button>
@@ -73,12 +100,25 @@ export const SettingsModal = Vue.component("settings-modal", {
             "ignoreDirtyState",
             "customTypes"
         ]),
+        dirtyState: {
+            get () {
+                return this.devFolder !== this.devFolderLocal
+                || this.ignoreDirtyState !== this.ignoreDirtyStateLocal
+                || JSON.stringify(this.customTypes) !== this.$refs.customTypes.getJSON();
+            }
+        },
     },
     data () {
         return {
+            enableSave: true,
             devFolderLocal: "",
             ignoreDirtyStateLocal: false,
             customTypesLocal: "",
+            editorOptions: {
+                showBtns: false,
+                mode: "code",
+                modes: ["code"]
+            }
         };
     },
     methods: {
@@ -87,22 +127,43 @@ export const SettingsModal = Vue.component("settings-modal", {
             "setIgnoreDirtyState",
             "setCustomTypes",
         ]),
+        onTypesUpdate (evt) {
+            this.enableSave = !evt.error;
+        },
         handleShow () {
             this.ignoreDirtyStateLocal = this.ignoreDirtyState;
             this.devFolderLocal = this.devFolder;
-            this.customTypesLocal = JSON.stringify(this.customTypes, null, 2);
+            this.customTypesLocal = deepClone(this.customTypes);
+            this.$refs?.customTypes?.reset();
+        },
+        autoFormat () {
+            this.$refs.customTypes.autoFormat();
+        },
+        reset () {
+            this.$refs?.customTypes?.reset();
         },
         saveSettings (hide) {
             this.setDevFolder(this.devFolderLocal);
             this.setIgnoreDirtyState(this.ignoreDirtyStateLocal);
-            try {
-                this.customTypesLocal = this.customTypesLocal === "" ? "{}" : this.customTypesLocal;
-                const customTypes = JSON.parse(this.customTypesLocal);
-                this.setCustomTypes(customTypes);
-            } catch (err) {
-                console.error(err, "customTypes contained invalid JSON");
-            }
+
+            const customTypes = this.$refs.customTypes.getObject();
+            this.setCustomTypes(customTypes);
             hide();
-        }
+        },
+        handleHide (evt) {
+            if (this.dirtyState) {
+                evt.preventDefault();
+                this.$bvModal.msgBoxConfirm("You have unsaved changes.\nContinue?")
+                    .then((value) => {
+                        if (value) {
+                            this.handleShow();
+                            this.$refs.modal.hide();
+                        }
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+            }
+        },
     }
 });

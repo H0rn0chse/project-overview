@@ -52,6 +52,11 @@ items.forEach((item) => {
     if (!item.hasOwnProperty("isFavorite")) {
         item.isFavorite = false;
     }
+
+    // eslint-disable-next-line no-prototype-builtins
+    if (!item.hasOwnProperty("localProtocol")) {
+        item.localProtocol = "vscode";
+    }
 });
 
 /*================================================================*/
@@ -68,6 +73,9 @@ export const appState = new Vuex.Store({
         items
     },
     getters: {
+        protocols: (state) => {
+            return defaults.protocols.concat(state.customTypes.protocols || []);
+        },
         repoTypes: (state) => {
             return defaults.repoTypes.concat(state.customTypes.repoTypes || []);
         },
@@ -96,6 +104,7 @@ export const appState = new Vuex.Store({
                 title: "new Project",
                 repoUrl: "https://github.com/user/new-project",
                 repoType: "github",
+                localProtocol: "vscode",
                 localPath: "new-project",
                 pathType: "relative",
                 packageUrl: "",

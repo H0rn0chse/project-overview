@@ -1,10 +1,20 @@
 export const defaults = {
     devFolder: "C:\\User\\Dev\\",
     customTypes: {
+        protocols: [],
         repoTypes: [],
         packageTypes: [],
         boardTypes: [],
     },
+    protocols: [{
+        id: "vscode",
+        text: "VSCode",
+        schema: "vscode://file/{{PATH}}",
+        icon: {
+            src: "SimpleIcons",
+            key: "visualstudiocode",
+        }
+    }],
     repoTypes: [{
         id: "",
         text: "None",

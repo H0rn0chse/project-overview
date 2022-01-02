@@ -51,3 +51,8 @@ export function replaceSvgWithSimpleIcons (domRef, name, options = {}) {
 export function deepClone (value) {
     return JSON.parse(JSON.stringify(value));
 }
+
+export function typeInTextarea(newText, elem = document.activeElement) {
+    const [start, end] = [elem.selectionStart, elem.selectionEnd];
+    elem.setRangeText(newText, start, end, "end");
+}
