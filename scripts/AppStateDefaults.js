@@ -87,7 +87,7 @@ export const defaults = {
         text: "Generic",
         icon: {
             src: "Feather",
-            key: "columns",
+            key: "layout",
         }
     }, {
         id: "trello",
