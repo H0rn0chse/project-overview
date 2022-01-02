@@ -8,59 +8,6 @@ const { Vuex } = globalThis;
 const items = getItems();
 const settings = getSettings();
 
-/*========================== CONVERSION ==========================*/
-items.forEach((item) => {
-    if (item.npm) {
-        item.packageUrl = item.npm;
-        item.packageType = "npm";
-        delete item.npm;
-    // eslint-disable-next-line no-prototype-builtins
-    } else if (item.hasOwnProperty("npm")) {
-        item.packageType = "";
-        item.packageUrl = "";
-        delete item.npm;
-    }
-
-    // eslint-disable-next-line no-prototype-builtins
-    if (!item.hasOwnProperty("packageType")) {
-        item.packageType = "";
-        item.packageUrl = "";
-    }
-
-    if (item.packageType === "npm" && item.packageUrl === "") {
-        item.packageType = "";
-    }
-
-    // eslint-disable-next-line no-prototype-builtins
-    if (!item.hasOwnProperty("boardType")) {
-        item.boardType = "";
-        item.boardUrl = "";
-    }
-
-    // eslint-disable-next-line no-prototype-builtins
-    if (!item.hasOwnProperty("wikiUrl")) {
-        item.wikiUrl = "";
-    }
-
-    // eslint-disable-next-line no-prototype-builtins
-    if (item.hasOwnProperty("demo")) {
-        item.demoUrl = item.demo;
-        delete item.demo;
-    }
-
-    // eslint-disable-next-line no-prototype-builtins
-    if (!item.hasOwnProperty("isFavorite")) {
-        item.isFavorite = false;
-    }
-
-    // eslint-disable-next-line no-prototype-builtins
-    if (!item.hasOwnProperty("localProtocol")) {
-        item.localProtocol = "vscode";
-    }
-});
-
-/*================================================================*/
-
 export const appState = new Vuex.Store({
     state: {
         searchTerms: [],
