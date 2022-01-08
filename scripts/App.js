@@ -8,6 +8,7 @@ import { EditItemGroup } from "./components/EditItemGroup.js";
 import { EditItemModal } from "./components/EditItemModal.js";
 import { AddItemModal } from "./components/AddItemModal.js";
 import { JsonEditor } from "./components/JsonEditor.js";
+import { replaceSvgWithFeather } from "./utils.js";
 
 const { Vue, Vuex, vueScrollbar, VueMarkdown } = globalThis;
 const { mapState, mapActions } = Vuex;
@@ -47,16 +48,32 @@ const app = new Vue({
             <edit-item-modal/>
             <add-item-modal/>
             <settings-modal/>
+            <b-button
+                id="btn-toTop"
+                @click="scrollTop"
+                pill
+            >
+                <svg ref="top"></svg>
+            </b-button>
         </b-container>
     `,
     store: appState,
     mounted () {
-        appState.watch(() => {
-            return this.filteredItems;
-        },
-        () => {
-            this.$refs.scrollbar.update();
-        });
+        const options = {
+            width: "2em",
+            height: "2em",
+        };
+
+        replaceSvgWithFeather(this.$refs.top, "chevrons-up", options);
+
+        appState.watch(
+            () => {
+                return this.filteredItems;
+            },
+            () => {
+                this.$refs.scrollbar.update();
+            }
+        );
     },
     computed: {
         ...mapState([
@@ -74,6 +91,9 @@ const app = new Vue({
     },
     methods: {
         ...mapActions([]),
+        scrollTop () {
+            this.$refs.scrollbar.$el.scrollTop = 0;
+        },
     },
 });
 
