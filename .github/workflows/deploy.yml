@@ -21,7 +21,9 @@ jobs:
         run: mkdir gh-pages
 
       - uses: actions/checkout@v2
-        working-directory: ./gh-pages
+        with:
+          ref: gh-pages
+          path: gh-pages
 
       - name: Clear subfolder
         run: rm -rf gh-pages/*
