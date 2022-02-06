@@ -33,7 +33,7 @@ jobs:
           git config --local user.name  ${{ github.event.pusher.name }}
           git config --local user.email  ${{ github.event.pusher.email }}
           git add -A
-          git commit -m "[CI] Updating github pages"
+          git commit -m "[CI] ${{ github.event.head_commit.message}}"
 
       - name: Push changes
         continue-on-error: true
