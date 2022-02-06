@@ -1,6 +1,6 @@
 # build and deploy to gh-pages
 
-name: build
+name: deploy
 
 on:
   push:
@@ -19,6 +19,13 @@ jobs:
 
       - name: Create subfolder
         run: mkdir gh-pages
+
+      - name: Checkout gh-pages
+        working-directory: ./gh-pages
+        uses: actions/checkout@v2
+
+      - name: Clear subfolder
+        run: rm -rf gh-pages/*
 
       - name: Copy new files for pages
         run: node ./scripts/copyDeps.js
