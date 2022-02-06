@@ -19,7 +19,7 @@ const dependencies = [[
 
 // copy dependencies to client
 dependencies.forEach((dep) => {
-    const pathFrom = dep[0];
+    const pathFrom = path.join(dep[0]);
     const pathTo = path.join("client", dep[1]);
     copyRecursiveSync(pathFrom, pathTo);
 });
