@@ -132,6 +132,7 @@ export const EditItemGroup = Vue.component("edit-item-group", {
                     class="toggleGroup"
                 >
                     <b-button
+                        title="Edit Description"
                         size="sm"
                         variant="primary"
                         :pressed.sync="editPressed"
@@ -139,6 +140,7 @@ export const EditItemGroup = Vue.component("edit-item-group", {
                         Edit
                     </b-button>
                     <b-button
+                        title="Show Description Preview"
                         size="sm"
                         variant="primary"
                         :pressed.sync="previewPressed"

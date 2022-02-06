@@ -65,11 +65,13 @@ export const SettingsModal = Vue.component("settings-modal", {
                     id="btn-autoFormat"
                 >
                     <b-button
+                        title="Reset Config"
                         @click="reset"
                     >
                         Reset
                     </b-button>
                     <b-button
+                        title="Format Config"
                         @click="autoFormat"
                         :disabled="!enableSave"
                     >
@@ -79,6 +81,7 @@ export const SettingsModal = Vue.component("settings-modal", {
             </b-form-group>
             <template #modal-footer="{ hide, cancel }">
                 <b-button
+                    title="Save Settings"
                     @click="saveSettings(hide)"
                     variant="success"
                     :disabled="!enableSave"
@@ -86,6 +89,7 @@ export const SettingsModal = Vue.component("settings-modal", {
                     Save
                 </b-button>
                 <b-button
+                    title="Cancel"
                     @click="cancel"
                 >
                     Cancel

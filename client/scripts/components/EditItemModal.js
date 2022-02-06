@@ -20,17 +20,20 @@ export const EditItemModal = Vue.component("edit-item-modal", {
             <edit-item-group/>
             <template #modal-footer="{ cancel }">
                 <b-button
+                    title= "Save Item"
                     @click="saveItem"
                     variant="success"
                 >
                     Save
                 </b-button>
                 <b-button
+                    title= "Cancel"
                     @click="cancel"
                 >
                     Cancel
                 </b-button>
                 <b-button
+                    title= "Delete Item"
                     @click="deleteItem"
                     variant="danger"
                 >

@@ -50,6 +50,7 @@ const app = new Vue({
             <settings-modal/>
             <b-button
                 id="btn-toTop"
+                title="Scroll to Top"
                 @click="scrollTop"
                 pill
             >
