@@ -17,9 +17,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Create subfolder
-        run: mkdir gh-pages
-
       - uses: actions/checkout@v2
         with:
           ref: gh-pages
