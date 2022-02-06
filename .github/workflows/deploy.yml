@@ -32,9 +32,9 @@ jobs:
           git commit -m "[CI] Updating github pages"
 
       - name: Push changes
-        working-directory: ./gh-pages
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: "gh-pages"
+          directory: ""./gh-pages"
           force: true
