@@ -20,9 +20,8 @@ jobs:
       - name: Create subfolder
         run: mkdir gh-pages
 
-      - name: Checkout gh-pages
+      - uses: actions/checkout@v2
         working-directory: ./gh-pages
-        uses: actions/checkout@v2
 
       - name: Clear subfolder
         run: rm -rf gh-pages/*
