@@ -1,5 +1,8 @@
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const dependencies = [[
     "/node_modules/bootstrap/dist", "/bootstrap"
@@ -19,8 +22,8 @@ const dependencies = [[
 
 // copy dependencies to client
 dependencies.forEach((dep) => {
-    const pathFrom = path.join(dep[0]);
-    const pathTo = path.join("client", dep[1]);
+    const pathFrom = path.join(__dirname, dep[0]);
+    const pathTo = path.join(__dirname, "client", dep[1]);
     copyRecursiveSync(pathFrom, pathTo);
 });
 
@@ -30,7 +33,7 @@ function copyRecursiveSync (src, dest) {
     const stats = exists && fs.statSync(src);
     const isDirectory = exists && stats.isDirectory();
     if (isDirectory) {
-        fs.mkdirSync(dest, );
+        fs.mkdirSync(dest, { recursive: true });
         fs.readdirSync(src).forEach((childItemName) => {
             copyRecursiveSync(path.join(src, childItemName), path.join(dest, childItemName));
         });
