@@ -21,12 +21,17 @@ const dependencies = [[
     "/node_modules/vue-markdown/dist", "/vue-markdown"
 ]];
 
-// copy dependencies to client
+// copy dependencies to gh-pages
 dependencies.forEach((dep) => {
     const pathFrom = path.join(projectDir, dep[0]);
-    const pathTo = path.join(projectDir, "client", dep[1]);
+    const pathTo = path.join(projectDir, "gh-pages", dep[1]);
     copyRecursiveSync(pathFrom, pathTo);
 });
+
+// Copy client to gh-pages
+const pathFrom = path.join(projectDir, "client");
+const pathTo = path.join(projectDir, "gh-pages");
+copyRecursiveSync(pathFrom, pathTo);
 
 // https://stackoverflow.com/a/22185855/14887710
 function copyRecursiveSync (src, dest) {

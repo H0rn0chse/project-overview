@@ -28,7 +28,7 @@ jobs:
         run: |
           git config --local user.name  ${{ github.event.pusher.name }}
           git config --local user.email  ${{ github.event.pusher.email }}
-          git add .
+          git add -A
           git commit -m "[CI] Updating github pages"
 
       - name: Push changes
