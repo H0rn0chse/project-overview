@@ -1,4 +1,4 @@
-# build and save build to dist
+# build and deploy to gh-pages
 
 name: build
 
