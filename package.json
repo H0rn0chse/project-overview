@@ -22,6 +22,7 @@
     "bootstrap": "^4.6.1",
     "bootstrap-vue": "^2.21.2",
     "feather-icons": "^4.28.0",
+    "simple-icons": "^6.8.0",
     "vue": "^2.6.14",
     "vue-custom-scrollbar": "^1.4.3",
     "vue-markdown": "^2.2.4",

@@ -1,4 +1,4 @@
-import * as simpleIcons from "https://unpkg.com/simple-icons/icons.mjs";
+import * as simpleIcons from "../simple-icons/icons.mjs";
 
 const { feather } = globalThis;
 

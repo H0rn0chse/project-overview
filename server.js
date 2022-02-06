@@ -17,5 +17,7 @@ startServer({
         "/node_modules/feather-icons/dist", "/feather-icons"
     ], [
         "/node_modules/vue-markdown/dist", "/vue-markdown"
+    ], [
+        "/node_modules/simple-icons", "/simple-icons"
     ]]
 });
