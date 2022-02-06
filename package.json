@@ -26,7 +26,8 @@
     "vue": "^2.6.14",
     "vue-custom-scrollbar": "^1.4.3",
     "vue-markdown": "^2.2.4",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "wc-github-corners": "^0.1.5"
   },
   "devDependencies": {
     "@h0rn0chse/socket-server": "^1.1.1",

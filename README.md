@@ -17,7 +17,7 @@ You can only add new types but nbot edit and remove the default ones. Have a loo
 ## Libraries
  * ScrollBar [github.com/Binaryify/vue-custom-scrollbar](https://github.com/Binaryify/vue-custom-scrollbar)
  * Markdown [github.com/miaolz123/vue-markdown](https://github.com/miaolz123/vue-markdown)
- * Github Corners [github.com/remarkablemark/github-corners](https://github.com/remarkablemark/github-corners)
+ * Github Corners [github.com/YunYouJun/wc-github-corners](https://github.com/YunYouJun/wc-github-corners)
  * Generic Icons [github.com/feathericons/feather](https://github.com/feathericons/feather)
  * Corporate Icons [github.com/simple-icons/simple-icons](https://github.com/simple-icons/simple-icons)
  * Vue [vuejs.org](https://vuejs.org/)

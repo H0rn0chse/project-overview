@@ -19,5 +19,7 @@ startServer({
         "/node_modules/vue-markdown/dist", "/vue-markdown"
     ], [
         "/node_modules/simple-icons", "/simple-icons"
+    ], [
+        "/node_modules/wc-github-corners/dist", "/wc-github-corners"
     ]]
 });

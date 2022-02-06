@@ -30,6 +30,7 @@
         <script src="./feather-icons/feather.min.js"></script>
         <script src="./vue-custom-scrollbar/vueScrollbar.umd.min.js"></script>
         <script src="./vue-markdown/vue-markdown.js"></script>
+        <script type="module" src="./wc-github-corners/index.es.js"></script>
 
         <link rel="stylesheet" href="./styles/main.css">
         <script type="module" src="./scripts/App.js"></script>
@@ -39,10 +40,10 @@
         <div id="app"></div>
         <div id="hidden"></div>
     </body>
-    <script
-        data-label="Check out the GitHub repository!"
-        data-href="https://github.com/H0rn0chse/project-overview"
-        data-target="_blank"
-        src="https://unpkg.com/github-corners@latest/dist/embed.min.js">
-    </script>
+    <github-corners
+        label="Check out the GitHub repository!"
+        repo="H0rn0chse/project-overview"
+        blank="true"
+    >
+    </github-corners>
 </html>
