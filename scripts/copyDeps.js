@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const projectDir = path.join(__dirname, "../");
 
 const dependencies = [[
     "/node_modules/bootstrap/dist", "/bootstrap"
@@ -22,8 +23,8 @@ const dependencies = [[
 
 // copy dependencies to client
 dependencies.forEach((dep) => {
-    const pathFrom = path.join(__dirname, dep[0]);
-    const pathTo = path.join(__dirname, "client", dep[1]);
+    const pathFrom = path.join(projectDir, dep[0]);
+    const pathTo = path.join(projectDir, "client", dep[1]);
     copyRecursiveSync(pathFrom, pathTo);
 });
 
