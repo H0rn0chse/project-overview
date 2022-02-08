@@ -155,7 +155,6 @@ export const SettingsModal = Vue.component("settings-modal", {
 
             const customTypes = this.$refs.customTypes.getObject();
             this.setCustomTypes(customTypes);
-            this.updateLocalCustomTypes();
             hide();
         },
         handleHide (evt) {
