@@ -1,6 +1,6 @@
 import { setDirtyState } from "./DirtyState.js";
 import { getItems, getSettings, setItems, setSettings, saveItems, saveSettings } from "./ItemManager.js";
-import { deepClone } from "./utils.js";
+import { deepClone, extendObjectList } from "./utils.js";
 import { defaults } from "./AppStateDefaults.js";
 
 const { Vuex } = globalThis;
@@ -22,16 +22,16 @@ export const appState = new Vuex.Store({
     },
     getters: {
         protocols: (state) => {
-            return defaults.protocols.concat(state.customTypes.protocols || []);
+            return extendObjectList(defaults.protocols, state.customTypes.protocols);
         },
         repoTypes: (state) => {
-            return defaults.repoTypes.concat(state.customTypes.repoTypes || []);
+            return extendObjectList(defaults.repoTypes, state.customTypes.repoTypes);
         },
         packageTypes: (state) => {
-            return defaults.packageTypes.concat(state.customTypes.packageTypes || []);
+            return extendObjectList(defaults.packageTypes, state.customTypes.packageTypes);
         },
         boardTypes: (state) => {
-            return defaults.boardTypes.concat(state.customTypes.boardTypes || []);
+            return extendObjectList(defaults.boardTypes, state.customTypes.boardTypes);
         },
     },
     mutations: {

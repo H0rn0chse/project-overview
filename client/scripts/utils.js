@@ -56,3 +56,20 @@ export function typeInTextarea(newText, elem = document.activeElement) {
     const [start, end] = [elem.selectionStart, elem.selectionEnd];
     elem.setRangeText(newText, start, end, "end");
 }
+
+export function extendObjectList (standardList = [], customList = []) {
+    const list = deepClone(standardList);
+    customList.forEach((item) => {
+        const itemIndex = list.findIndex((listItem) => {
+            return listItem.id === item.id;
+        });
+
+        if (itemIndex < 0) {
+            list.push(deepClone(item));
+        } else {
+            list[itemIndex] = deepClone(item);
+        }
+    });
+
+    return list;
+}
