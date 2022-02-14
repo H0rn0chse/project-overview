@@ -27,7 +27,7 @@ export const SearchBar = Vue.component("search-bar", {
     `,
     props: [],
     mounted () {
-        replaceSvgWithFeather(this.$refs.clearTags, "x-circle");
+        replaceSvgWithFeather(this.$refs.clearTags, "x");
     },
     computed: {
         ...mapState([
