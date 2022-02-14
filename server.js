@@ -16,7 +16,7 @@ startServer({
     ], [
         "/node_modules/feather-icons/dist", "/libs/feather-icons"
     ], [
-        "/node_modules/vue-markdown/dist", "/libs/vue-markdown"
+        "/node_modules/@adapttive/vue-markdown/dist", "/libs/vue-markdown"
     ], [
         "/node_modules/simple-icons", "/libs/simple-icons"
     ], [
