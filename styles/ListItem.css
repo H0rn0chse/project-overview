@@ -1,0 +1,27 @@
+.listItem {
+    width: 100%;
+    padding: 0.5em;
+    margin: 0.2em;
+    cursor: pointer;
+
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--common-font-secondary);
+    border-radius: 10px;
+    background-color: var(--common-bg);
+}
+
+.listItem:hover {
+    background-color: var(--common-bg-light);
+}
+
+.listItem .linkList > * {
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+    margin-left: 0.1em;
+    margin-right: 0.1em;
+}
+
+.listItem .favorite {
+    margin-right: 2em;
+}

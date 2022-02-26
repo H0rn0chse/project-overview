@@ -1,0 +1,15 @@
+#app {
+    width: 100vw;
+    height: 100vh;
+}
+
+.itemScrollArea {
+    width: 100vw;
+    z-index: 0;
+}
+
+#btn-toTop {
+    position: fixed;
+    bottom: 4em;
+    right: 4em;
+}

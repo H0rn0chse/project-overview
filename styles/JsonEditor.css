@@ -1,0 +1,46 @@
+.jsonEditor {
+    width: 100%;
+}
+
+.textareaContainer *, .textareaContainer *::before, .textareaContainer *::after {
+    box-sizing: border-box;
+  }
+
+.textareaContainer, .textareaContainer > .scrollContainer, .textareaContainer > textarea {
+    width: 100%;
+    height: 100%;
+}
+
+.textareaContainer {
+    display: block;
+    margin: 0 auto;
+}
+
+.textareaContainer > .scrollContainer {
+    position: absolute;
+    overflow: auto;
+}
+
+.textareaContainer .highlights {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: transparent;
+}
+
+.textareaContainer > textarea, .textareaContainer .highlights{
+    padding: 2px;
+}
+
+.textareaContainer > textarea {
+    display: block;
+    position: absolute;
+    background-color: transparent;
+    overflow: auto;
+    resize: none;
+}
+
+.textareaContainer mark {
+    border-radius: 3px;
+    color: transparent;
+    background-color: var(--common-delete);
+}
