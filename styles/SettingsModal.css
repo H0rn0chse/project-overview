@@ -1,0 +1,8 @@
+#settingsModal .jsonEditor {
+    height: 20em;
+}
+
+#settingsModal .invisbibleLabel {
+    color: transparent;
+    user-select: none;
+}

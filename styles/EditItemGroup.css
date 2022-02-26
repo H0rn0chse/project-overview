@@ -1,0 +1,15 @@
+.editItemGroup .itemDescription {
+    overflow: auto;
+    width: calc(100% - 2em);
+    color: var(--common-font-dark);
+    padding: 0.5em;
+    border-style: solid;
+    border-color:  var(--common-input-border);;
+    border-width: 1px;
+    border-radius: 0.25rem;;
+    margin-right: 1rem;
+}
+
+.editItemGroup .toggleGroup {
+    margin-bottom: 0.25em;
+}
