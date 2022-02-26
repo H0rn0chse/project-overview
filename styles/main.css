@@ -1,0 +1,22 @@
+@import "colors.css";
+@import "App.css";
+@import "JsonEditor.css";
+@import "SideBar.css";
+@import "SearchBar.css";
+@import "ItemList.css";
+@import "ListItem.css";
+@import "SettingsModal.css";
+@import "EditItemGroup.css";
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    color: var(--common-font-secondary);
+    background-color: var(--common-bg);
+}
+
+#hidden {
+    display: none;
+}
