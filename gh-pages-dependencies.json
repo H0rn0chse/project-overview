@@ -17,5 +17,5 @@
 ], [
     "/node_modules/simple-icons", "/libs/simple-icons"
 ], [
-    "/node_modules/wc-github-corners/dist", "/libs/wc-github-corners"
+    "/node_modules/github-corner-element/dist", "/libs/github-corner-element"
 ]]

@@ -26,12 +26,12 @@
     "simple-icons": "^6.8.0",
     "vue": "^2.6.14",
     "vue-custom-scrollbar": "^1.4.3",
-    "vuex": "^3.6.2",
-    "wc-github-corners": "^0.1.5"
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@h0rn0chse/socket-server": "^1.1.1",
     "eslint": "^8.5.0",
-    "eslint-plugin-vue": "^8.2.0"
+    "eslint-plugin-vue": "^8.2.0",
+    "github-corner-element": "^1.0.1"
   }
 }

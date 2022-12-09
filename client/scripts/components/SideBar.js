@@ -37,7 +37,7 @@ export const SideBar = Vue.component("side-bar", {
             <div
                 class="bottom d-flex flex-column align-items-center"
             >
-                <div
+                <di v
                     title="Add new Project"
                     class="sideItem"
                     @click="showAddItemModal"
